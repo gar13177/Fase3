@@ -1,0 +1,74 @@
+COMPILER CompilationUnit
+
+CHARACTERS
+letter = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".
+digit = "0123456789".
+hexdigit = digit+"ABCDEF".
+KEYWORDS
+if="if".
+while="while".
+TOKENS
+id = letter{letter} EXCEPT KEYWORDS.
+number = digit{digit}.
+hexnumber = hexdigit{hexdigit}"H".
+
+END CompilationUnit.
+
+
+
+CHARACTERS
+  tab           = CHR ( 09 ) . 
+  lf            = CHR ( 10 ) .  
+  cr            = CHR ( 13 ) .
+
+  zero          = '0'.
+  zeroToThree   = zero + "123" .
+  octalDigit    = zero + "1234567" . 
+  nonZeroDigit  = "123456789".
+  digit         = '0' + nonZeroDigit .
+  hexDigit      = digit + "ABCDEFabcdef" .
+  letter        = 'A' .. 'Z' + 'a' .. 'z' + '_' + '$'.
+
+  char          = ANY - "'" - '\\' - cr - lf .
+  stringChar    = ANY - '\"' - '\\' - cr - lf .
+  
+KEYWORDS
+  boolean = "boolean".
+  byte    = "byte".
+  char    = "char".
+  class   = "class".
+  double  = "double".
+  false   = "false".
+  final   = "final".
+  float   = "float".
+  int     = "int".
+  long    = "long".
+  new     = "new".
+  null    = "null".
+  short   = "short".
+  static  = "static".
+  super   = "super".
+  this    = "this".
+  true    = "true".
+  void    = "void".
+
+  colon   = ":".
+  comma   = ",".
+  dec     = "--".
+  dot     = ".".
+  inc     = "++".
+  lbrace  = "{".
+  lbrack  = "[".
+  lpar    = "(".
+  minus   = "-".
+  not     = "!".
+  plus    = "+".
+  rbrace  = "}".
+  rbrack  = "]".
+  rpar    = ")".
+  tilde   = "~".
+  
+TOKENS
+  ident = letter { letter | digit } EXCEPT KEYWORDS.
+
+END CompilationUnit.
