@@ -1,18 +1,5 @@
 COMPILER CompilationUnit
 
-CHARACTERS
-letter = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".
-digit = "0123456789".
-hexdigit = digit+"ABCDEF".
-KEYWORDS
-if="if".
-while="while".
-TOKENS
-id = letter{letter} EXCEPT KEYWORDS.
-number = digit{digit}.
-hexnumber = hexdigit{hexdigit}"H".
-
-END CompilationUnit.
 
 
 
@@ -70,5 +57,27 @@ KEYWORDS
   
 TOKENS
   ident = letter { letter | digit } EXCEPT KEYWORDS.
+  next = ( "b" | "t" | "n" | "f" | "r"  | "\'" | "\\"
+                | "u" { "u" } hexDigit hexDigit hexDigit hexDigit
+                | zeroToThree [ octalDigit ] [ octalDigit ]
+                | octalDigit [ octalDigit ]
+                ).s
+
+END CompilationUnit.
+
+
+
+
+CHARACTERS
+letter = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".
+digit = "0123456789".
+hexdigit = digit+"ABCDEF".
+KEYWORDS
+if="if".
+while="while".
+TOKENS
+id = letter{letter} EXCEPT KEYWORDS.
+number = digit{digit}.
+hexnumber = hexdigit{hexdigit}"H".
 
 END CompilationUnit.

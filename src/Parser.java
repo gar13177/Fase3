@@ -60,6 +60,7 @@ public class Parser {
         resWords.add("EXCEPT");//6
         resWords.add("KEYWORDS");//7
         resWords.add("IGNORE");//8
+        resWords.add("PRODUCTIONS");//9
         
         
         //conjunto any
@@ -95,6 +96,12 @@ public class Parser {
         
         log += "L: "+scanner.getLine()+" C: "+scanner.getColumn() +" "+ "lectura ScannerSpecification\n";
         ScannerSpecification();//ejecutamos scannerspecification
+        
+        log += "L: "+scanner.getLine()+" C: "+scanner.getColumn() +" "+ "lectura ParserSpecification\n";
+        if (!ParserSpecification()){//ejecutamos parserSpecification
+            log += "L: "+scanner.getLine()+" C: "+scanner.getColumn() +" "+ "error no ParserSpecification\n";
+            return false;
+        }
         
         jumpWhite();//saltamos en blanco
         log += "L: "+scanner.getLine()+" C: "+scanner.getColumn() +" "+ "lectura END\n";
@@ -182,6 +189,25 @@ public class Parser {
         log += "L: "+scanner.getLine()+" C: "+scanner.getColumn() +" "+ "TokenDecl lectura ident\n";
         if (!isIdent()) return false;
         String ident = scanner.getString(scanner.getPointer(), scanner.getCharPos());
+        System.out.println(ident);
+        if (ident.equals("PRODUCTIONS")){
+            int tempindex = scanner.getCharPos();//guardar posicion
+            scanner.setCharPos(scanner.getPointer());//retornamos hasta previo de Productions
+            if (ParserSpecification()){// si se logra leer parserspecification, no es token
+                System.out.println("esto ocurrio");
+                return false;
+            }
+            scanner.setCharPos(tempindex);
+        }else if (ident.equals("IGNORE")){
+            int tempindex = scanner.getCharPos();
+            scanner.setCharPos(scanner.getPointer());
+            if (WhiteSpaceDecl()){//si es whitespace
+                System.out.println("white");
+                return false;
+            }
+            scanner.setCharPos(tempindex);            
+        }
+        
         log += "L: "+scanner.getLine()+" C: "+scanner.getColumn() +" "+ "TokenDecl iden encontrado\n";
         
         jumpWhite();
@@ -236,6 +262,7 @@ public class Parser {
         
         boolean cond = true;
         while (cond){
+            jumpWhite();
             if (scanner.Peek() == '|'){
                 scanner.NextCh();
                 jumpWhite();
@@ -243,6 +270,7 @@ public class Parser {
                 log += "L: "+scanner.getLine()+" C: "+scanner.getColumn() +" "+ "TokenExpr lectura | Token Term\n";
                 if (TokenTerm()){
                     temp += ""+""+(char)248+builder.getString();
+                    
                     tempindex = scanner.getCharPos();
                 }else{
                     cond = false;
@@ -578,6 +606,205 @@ public class Parser {
         
         return false;      
         
+    }
+    
+    public boolean ParserSpecification(){
+        int tempindex;
+        System.out.println("ingreso a parser");
+        jumpWhite();//saltamos en blanco
+        tempindex = scanner.getCharPos();//guardamos posicion
+        log += "L: "+scanner.getLine()+" C: "+scanner.getColumn() +" "+ "lectura PRODUCTIONS\n";
+        if (readSpecWord(9)){//si dice PRODUCTIONS
+            tempindex = scanner.getCharPos();
+            log += "L: "+scanner.getLine()+" C: "+scanner.getColumn() +" "+ "lectura Production\n";
+            while (Production()){
+                tempindex = scanner.getCharPos();
+            }
+        }else{
+            return false;
+        }
+        scanner.setCharPos(tempindex);
+        return true;
+    }
+    
+    public boolean Production(){
+        jumpWhite();
+        
+        scanner.setPointer();
+        log += "L: "+scanner.getLine()+" C: "+scanner.getColumn() +" "+ "Production lectura ident\n";
+        if (!isIdent()) return false;//no hay ident
+        String ident = scanner.getString(scanner.getPointer(), scanner.getCharPos());
+        
+        jumpWhite();
+        int tempindex = scanner.getCharPos();
+        if (!Attributes()){
+            scanner.setCharPos(tempindex);
+        }
+        
+        jumpWhite();
+        tempindex = scanner.getCharPos();
+        if (!SemAction()){
+            scanner.setCharPos(tempindex);
+        }
+        
+        jumpWhite();
+        if (scanner.Peek()!='=') return false;//no hay 
+        System.out.println("Production, si hay =");
+        scanner.NextCh();
+        
+        jumpWhite();
+        
+        if (!Expression()) return false; //no hay expression
+        
+        jumpWhite();
+        if (scanner.Peek() != '.') return false;
+        scanner.NextCh();        
+        
+        return true;
+    }
+    
+    public boolean Attributes(){
+        jumpWhite();
+        if (scanner.Peek() != '<') return false;
+        scanner.NextCh();
+        if (scanner.Peek() != '.') return false;
+        scanner.NextCh();
+        
+        while (scanner.Peek() != '.'){
+            if (scanner.Peek() == -1) return false;
+            
+            scanner.NextCh();
+        }
+        if (scanner.Peek() != '.') return false;
+        scanner.NextCh(); 
+        if (scanner.Peek() != '>') return false;
+        scanner.NextCh();
+        
+        
+        return true;
+    }
+    
+    public boolean SemAction(){
+        jumpWhite();
+        if (scanner.Peek() != '(') return false;
+        scanner.NextCh();
+        if (scanner.Peek() != '.') return false;
+        scanner.NextCh();
+        
+        while (scanner.Peek() != '.'){
+            if (scanner.Peek() == -1) return false;
+            scanner.NextCh();
+        }
+        if (scanner.Peek() != '.') return false;
+        scanner.NextCh(); 
+        if (scanner.Peek() != ')') return false;
+        scanner.NextCh();
+        
+        
+        return true;
+    }
+    
+    public boolean Expression(){
+        jumpWhite();
+        
+        if (!Term()) return false;
+        
+        jumpWhite();
+        int tempindex = scanner.getCharPos();
+        boolean cond = true;
+        
+        while (cond){
+            jumpWhite();
+            if (scanner.Peek() == '|'){
+                scanner.NextCh();
+                jumpWhite();
+                if (Term()){
+                    tempindex = scanner.getCharPos();
+                }else{
+                    cond = false;
+                }
+            }else{
+                cond = false;
+            }
+        }
+        
+        scanner.setCharPos(tempindex);
+        
+        
+        return true;
+    }
+    
+    public boolean Term(){
+        jumpWhite();
+        if (!Factor()) return false;
+        
+        jumpWhite();
+        int tempindex = scanner.getCharPos();
+        
+        while (Factor()){
+            jumpWhite();
+            tempindex = scanner.getCharPos();
+        }
+        
+        scanner.setCharPos(tempindex);
+        return true;
+    }
+    
+    public boolean Factor(){
+        jumpWhite();
+        int tempindex = scanner.getCharPos();
+        if (Symbol()){
+            jumpWhite();
+            tempindex = scanner.getCharPos();
+            if (!Attributes()){
+                scanner.setCharPos(tempindex);
+            }
+            return true;
+        }
+        
+        scanner.setCharPos(tempindex);
+        if (scanner.Peek() == '('){
+            scanner.NextCh();
+            jumpWhite();
+            if (Expression()){
+                jumpWhite();
+                if (scanner.Peek() == ')'){
+                    scanner.NextCh();
+                    return true;
+                }
+            }
+        }
+        
+        scanner.setCharPos(tempindex);
+        if (scanner.Peek() == '['){
+            scanner.NextCh();
+            jumpWhite();
+            if (Expression()){
+                jumpWhite();
+                if (scanner.Peek() == ']'){
+                    scanner.NextCh();
+                    return true;
+                }
+            }
+        }
+        
+        scanner.setCharPos(tempindex);
+        if (scanner.Peek() == '{'){
+            scanner.NextCh();
+            jumpWhite();
+            if (Expression()){
+                jumpWhite();
+                if (scanner.Peek() == '}'){
+                    scanner.NextCh();
+                    return true;
+                }
+            }
+        }
+        
+        scanner.setCharPos(tempindex);
+        if (SemAction()) return true;
+        
+        return false;
     }
     
     

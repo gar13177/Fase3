@@ -4,97 +4,869 @@ L: 1 C: 25 ident: CompilationUnit
 L: 1 C: 25 lectura ScannerSpecification
 L: 3 C: 1 lectura CHARACTERS
 L: 3 C: 11 lectura SetDecl
-L: 4 C: 1 SetDecl lectura ident
-L: 4 C: 9 SetDecl lectura Set
-L: 4 C: 10 Set lectura BasicSet
-L: 4 C: 10 BasicSet lectura string
-L: 4 C: 65 SetDecl characters match
-L: 5 C: 1 SetDecl lectura ident
-L: 5 C: 8 SetDecl lectura Set
-L: 5 C: 9 Set lectura BasicSet
-L: 5 C: 9 BasicSet lectura string
-L: 5 C: 22 SetDecl characters match
-L: 6 C: 1 SetDecl lectura ident
-L: 6 C: 11 SetDecl lectura Set
-L: 6 C: 12 Set lectura BasicSet
-L: 6 C: 12 BasicSet lectura string
-L: 6 C: 12 BasicSet lectura char
-L: 6 C: 12 BasicSet lectura ident
-L: 6 C: 18 Set lectura +- BasicSet
-L: 6 C: 18 BasicSet lectura string
-L: 6 C: 27 SetDecl characters match
-L: 7 C: 1 SetDecl lectura ident
-L: 8 C: 1 lectura KEYWORDS
-L: 8 C: 9 lectura KeywordDecl
-L: 9 C: 1 KeywordDecl lectura ident
-L: 9 C: 3 KeywordDecl ident localizado
-L: 9 C: 4 KeywordDecl buscado conjunto de ident
-L: 9 C: 9 KeywordDecl keyword encontrado
-L: 10 C: 1 KeywordDecl lectura ident
-L: 10 C: 6 KeywordDecl ident localizado
-L: 10 C: 7 KeywordDecl buscado conjunto de ident
-L: 10 C: 15 KeywordDecl keyword encontrado
-L: 11 C: 1 KeywordDecl lectura ident
-L: 11 C: 7 KeywordDecl ident localizado
-L: 11 C: 1 lectura TOKENS
-L: 11 C: 7 lectura TokenDecl
-L: 12 C: 1 TokenDecl lectura ident
-L: 12 C: 3 TokenDecl iden encontrado
-L: 12 C: 6 TokenDecl lectura TokenExpr
-L: 12 C: 6 TokenExpr lectura TokenTerm
-L: 12 C: 6 TokenTerm lectura TokenFactor
-L: 12 C: 6 TokenFactor lectura symbolo
-L: 11 C: 12 TokenTerm lectura {TokenFactor}
-L: 11 C: 12 TokenFactor lectura symbolo
-L: 11 C: 13 TokenFactor lectura {TokenExpr}
-L: 11 C: 13 TokenExpr lectura TokenTerm
-L: 11 C: 13 TokenTerm lectura TokenFactor
-L: 11 C: 13 TokenFactor lectura symbolo
-L: 11 C: 19 TokenTerm lectura {TokenFactor}
-L: 11 C: 19 TokenFactor lectura symbolo
-L: 11 C: 21 TokenTerm lectura {TokenFactor}
-L: 11 C: 21 TokenFactor lectura symbolo
-L: 11 C: 21 KeywordDecl lectura EXCEPT KEYWORDS
-L: 12 C: 1 TokenDecl lectura ident
-L: 12 C: 7 TokenDecl iden encontrado
-L: 12 C: 10 TokenDecl lectura TokenExpr
-L: 12 C: 10 TokenExpr lectura TokenTerm
-L: 12 C: 10 TokenTerm lectura TokenFactor
-L: 12 C: 10 TokenFactor lectura symbolo
-L: 12 C: 15 TokenTerm lectura {TokenFactor}
-L: 12 C: 15 TokenFactor lectura symbolo
-L: 12 C: 16 TokenFactor lectura {TokenExpr}
-L: 12 C: 16 TokenExpr lectura TokenTerm
-L: 12 C: 16 TokenTerm lectura TokenFactor
-L: 12 C: 16 TokenFactor lectura symbolo
-L: 12 C: 21 TokenTerm lectura {TokenFactor}
-L: 12 C: 21 TokenFactor lectura symbolo
-L: 12 C: 22 TokenTerm lectura {TokenFactor}
-L: 12 C: 22 TokenFactor lectura symbolo
-L: 12 C: 22 KeywordDecl lectura EXCEPT KEYWORDS
-L: 13 C: 1 TokenDecl lectura ident
-L: 13 C: 10 TokenDecl iden encontrado
-L: 13 C: 13 TokenDecl lectura TokenExpr
-L: 13 C: 13 TokenExpr lectura TokenTerm
-L: 13 C: 13 TokenTerm lectura TokenFactor
-L: 13 C: 13 TokenFactor lectura symbolo
-L: 13 C: 21 TokenTerm lectura {TokenFactor}
-L: 13 C: 21 TokenFactor lectura symbolo
-L: 13 C: 22 TokenFactor lectura {TokenExpr}
-L: 13 C: 22 TokenExpr lectura TokenTerm
-L: 13 C: 22 TokenTerm lectura TokenFactor
-L: 13 C: 22 TokenFactor lectura symbolo
-L: 13 C: 30 TokenTerm lectura {TokenFactor}
-L: 13 C: 30 TokenFactor lectura symbolo
-L: 13 C: 31 TokenTerm lectura {TokenFactor}
-L: 13 C: 31 TokenFactor lectura symbolo
-L: 13 C: 34 TokenTerm lectura {TokenFactor}
-L: 13 C: 34 TokenFactor lectura symbolo
-L: 13 C: 34 KeywordDecl lectura EXCEPT KEYWORDS
-L: 15 C: 1 TokenDecl lectura ident
-L: 15 C: 4 TokenDecl iden encontrado
-L: 15 C: 5 KeywordDecl lectura EXCEPT KEYWORDS
-L: 16 C: 1 lectura WhiteSpaceDecl
-L: 16 C: 1 lectura END
-L: 16 C: 5 revision ident
-L: 16 C: 20 ident concuerda
+L: 4 C: 3 SetDecl lectura ident
+L: 4 C: 18 SetDecl lectura Set
+L: 4 C: 19 Set lectura BasicSet
+L: 4 C: 19 BasicSet lectura string
+L: 4 C: 19 BasicSet lectura char
+L: 4 C: 31 SetDecl characters match
+L: 5 C: 3 SetDecl lectura ident
+L: 5 C: 18 SetDecl lectura Set
+L: 5 C: 19 Set lectura BasicSet
+L: 5 C: 19 BasicSet lectura string
+L: 5 C: 19 BasicSet lectura char
+L: 5 C: 31 SetDecl characters match
+L: 6 C: 3 SetDecl lectura ident
+L: 6 C: 18 SetDecl lectura Set
+L: 6 C: 19 Set lectura BasicSet
+L: 6 C: 19 BasicSet lectura string
+L: 6 C: 19 BasicSet lectura char
+L: 6 C: 31 SetDecl characters match
+L: 8 C: 3 SetDecl lectura ident
+L: 8 C: 18 SetDecl lectura Set
+L: 8 C: 19 Set lectura BasicSet
+L: 8 C: 19 BasicSet lectura string
+L: 8 C: 19 BasicSet lectura char
+L: 8 C: 23 SetDecl characters match
+L: 9 C: 3 SetDecl lectura ident
+L: 9 C: 18 SetDecl lectura Set
+L: 9 C: 19 Set lectura BasicSet
+L: 9 C: 19 BasicSet lectura string
+L: 9 C: 19 BasicSet lectura char
+L: 9 C: 19 BasicSet lectura ident
+L: 9 C: 25 Set lectura +- BasicSet
+L: 9 C: 26 BasicSet lectura string
+L: 9 C: 33 SetDecl characters match
+L: 10 C: 3 SetDecl lectura ident
+L: 10 C: 18 SetDecl lectura Set
+L: 10 C: 19 Set lectura BasicSet
+L: 10 C: 19 BasicSet lectura string
+L: 10 C: 19 BasicSet lectura char
+L: 10 C: 19 BasicSet lectura ident
+L: 10 C: 25 Set lectura +- BasicSet
+L: 10 C: 26 BasicSet lectura string
+L: 10 C: 37 SetDecl characters match
+L: 11 C: 3 SetDecl lectura ident
+L: 11 C: 18 SetDecl lectura Set
+L: 11 C: 19 Set lectura BasicSet
+L: 11 C: 19 BasicSet lectura string
+L: 11 C: 31 SetDecl characters match
+L: 12 C: 3 SetDecl lectura ident
+L: 12 C: 18 SetDecl lectura Set
+L: 12 C: 19 Set lectura BasicSet
+L: 12 C: 19 BasicSet lectura string
+L: 12 C: 19 BasicSet lectura char
+L: 12 C: 24 Set lectura +- BasicSet
+L: 12 C: 25 BasicSet lectura string
+L: 12 C: 25 BasicSet lectura char
+L: 12 C: 25 BasicSet lectura ident
+L: 12 C: 39 SetDecl characters match
+L: 13 C: 3 SetDecl lectura ident
+L: 13 C: 18 SetDecl lectura Set
+L: 13 C: 19 Set lectura BasicSet
+L: 13 C: 19 BasicSet lectura string
+L: 13 C: 19 BasicSet lectura char
+L: 13 C: 19 BasicSet lectura ident
+L: 13 C: 26 Set lectura +- BasicSet
+L: 13 C: 27 BasicSet lectura string
+L: 13 C: 43 SetDecl characters match
+L: 14 C: 3 SetDecl lectura ident
+L: 14 C: 18 SetDecl lectura Set
+L: 14 C: 19 Set lectura BasicSet
+L: 14 C: 19 BasicSet lectura string
+L: 14 C: 19 BasicSet lectura char
+L: 14 C: 31 Set lectura +- BasicSet
+L: 14 C: 32 BasicSet lectura string
+L: 14 C: 32 BasicSet lectura char
+L: 14 C: 44 Set lectura +- BasicSet
+L: 14 C: 45 BasicSet lectura string
+L: 14 C: 45 BasicSet lectura char
+L: 14 C: 50 Set lectura +- BasicSet
+L: 14 C: 51 BasicSet lectura string
+L: 14 C: 51 BasicSet lectura char
+L: 14 C: 55 SetDecl characters match
+L: 16 C: 3 SetDecl lectura ident
+L: 16 C: 18 SetDecl lectura Set
+L: 16 C: 19 Set lectura BasicSet
+L: 16 C: 19 BasicSet lectura string
+L: 16 C: 19 BasicSet lectura char
+L: 16 C: 19 BasicSet lectura ident
+L: 16 C: 27 Set lectura +- BasicSet
+L: 16 C: 28 BasicSet lectura string
+L: 16 C: 28 BasicSet lectura char
+L: 16 C: 28 BasicSet lectura ident
+L: 16 C: 36 SetDecl characters match
+L: 17 C: 3 SetDecl lectura ident
+L: 17 C: 18 SetDecl lectura Set
+L: 17 C: 19 Set lectura BasicSet
+L: 17 C: 19 BasicSet lectura string
+L: 17 C: 19 BasicSet lectura char
+L: 17 C: 19 BasicSet lectura ident
+L: 17 C: 27 Set lectura +- BasicSet
+L: 17 C: 28 BasicSet lectura string
+L: 17 C: 28 BasicSet lectura char
+L: 17 C: 28 BasicSet lectura ident
+L: 17 C: 34 SetDecl characters match
+L: 19 C: 1 SetDecl lectura ident
+L: 20 C: 1 lectura KEYWORDS
+L: 20 C: 9 lectura KeywordDecl
+L: 21 C: 3 KeywordDecl lectura ident
+L: 21 C: 10 KeywordDecl ident localizado
+L: 21 C: 13 KeywordDecl buscado conjunto de ident
+L: 21 C: 23 KeywordDecl keyword encontrado
+L: 22 C: 3 KeywordDecl lectura ident
+L: 22 C: 7 KeywordDecl ident localizado
+L: 22 C: 13 KeywordDecl buscado conjunto de ident
+L: 22 C: 20 KeywordDecl keyword encontrado
+L: 23 C: 3 KeywordDecl lectura ident
+L: 23 C: 7 KeywordDecl ident localizado
+L: 23 C: 13 KeywordDecl buscado conjunto de ident
+L: 23 C: 20 KeywordDecl keyword encontrado
+L: 24 C: 3 KeywordDecl lectura ident
+L: 24 C: 8 KeywordDecl ident localizado
+L: 24 C: 13 KeywordDecl buscado conjunto de ident
+L: 24 C: 21 KeywordDecl keyword encontrado
+L: 25 C: 3 KeywordDecl lectura ident
+L: 25 C: 9 KeywordDecl ident localizado
+L: 25 C: 13 KeywordDecl buscado conjunto de ident
+L: 25 C: 22 KeywordDecl keyword encontrado
+L: 26 C: 3 KeywordDecl lectura ident
+L: 26 C: 8 KeywordDecl ident localizado
+L: 26 C: 13 KeywordDecl buscado conjunto de ident
+L: 26 C: 21 KeywordDecl keyword encontrado
+L: 27 C: 3 KeywordDecl lectura ident
+L: 27 C: 8 KeywordDecl ident localizado
+L: 27 C: 13 KeywordDecl buscado conjunto de ident
+L: 27 C: 21 KeywordDecl keyword encontrado
+L: 28 C: 3 KeywordDecl lectura ident
+L: 28 C: 8 KeywordDecl ident localizado
+L: 28 C: 13 KeywordDecl buscado conjunto de ident
+L: 28 C: 21 KeywordDecl keyword encontrado
+L: 29 C: 3 KeywordDecl lectura ident
+L: 29 C: 6 KeywordDecl ident localizado
+L: 29 C: 13 KeywordDecl buscado conjunto de ident
+L: 29 C: 19 KeywordDecl keyword encontrado
+L: 30 C: 3 KeywordDecl lectura ident
+L: 30 C: 7 KeywordDecl ident localizado
+L: 30 C: 13 KeywordDecl buscado conjunto de ident
+L: 30 C: 20 KeywordDecl keyword encontrado
+L: 31 C: 3 KeywordDecl lectura ident
+L: 31 C: 6 KeywordDecl ident localizado
+L: 31 C: 13 KeywordDecl buscado conjunto de ident
+L: 31 C: 19 KeywordDecl keyword encontrado
+L: 32 C: 3 KeywordDecl lectura ident
+L: 32 C: 7 KeywordDecl ident localizado
+L: 32 C: 13 KeywordDecl buscado conjunto de ident
+L: 32 C: 20 KeywordDecl keyword encontrado
+L: 33 C: 3 KeywordDecl lectura ident
+L: 33 C: 8 KeywordDecl ident localizado
+L: 33 C: 13 KeywordDecl buscado conjunto de ident
+L: 33 C: 21 KeywordDecl keyword encontrado
+L: 34 C: 3 KeywordDecl lectura ident
+L: 34 C: 9 KeywordDecl ident localizado
+L: 34 C: 13 KeywordDecl buscado conjunto de ident
+L: 34 C: 22 KeywordDecl keyword encontrado
+L: 35 C: 3 KeywordDecl lectura ident
+L: 35 C: 8 KeywordDecl ident localizado
+L: 35 C: 13 KeywordDecl buscado conjunto de ident
+L: 35 C: 21 KeywordDecl keyword encontrado
+L: 36 C: 3 KeywordDecl lectura ident
+L: 36 C: 7 KeywordDecl ident localizado
+L: 36 C: 13 KeywordDecl buscado conjunto de ident
+L: 36 C: 20 KeywordDecl keyword encontrado
+L: 37 C: 3 KeywordDecl lectura ident
+L: 37 C: 7 KeywordDecl ident localizado
+L: 37 C: 13 KeywordDecl buscado conjunto de ident
+L: 37 C: 20 KeywordDecl keyword encontrado
+L: 38 C: 3 KeywordDecl lectura ident
+L: 38 C: 7 KeywordDecl ident localizado
+L: 38 C: 13 KeywordDecl buscado conjunto de ident
+L: 38 C: 20 KeywordDecl keyword encontrado
+L: 40 C: 3 KeywordDecl lectura ident
+L: 40 C: 8 KeywordDecl ident localizado
+L: 40 C: 13 KeywordDecl buscado conjunto de ident
+L: 40 C: 17 KeywordDecl keyword encontrado
+L: 41 C: 3 KeywordDecl lectura ident
+L: 41 C: 8 KeywordDecl ident localizado
+L: 41 C: 13 KeywordDecl buscado conjunto de ident
+L: 41 C: 17 KeywordDecl keyword encontrado
+L: 42 C: 3 KeywordDecl lectura ident
+L: 42 C: 6 KeywordDecl ident localizado
+L: 42 C: 13 KeywordDecl buscado conjunto de ident
+L: 42 C: 18 KeywordDecl keyword encontrado
+L: 43 C: 3 KeywordDecl lectura ident
+L: 43 C: 6 KeywordDecl ident localizado
+L: 43 C: 13 KeywordDecl buscado conjunto de ident
+L: 43 C: 17 KeywordDecl keyword encontrado
+L: 44 C: 3 KeywordDecl lectura ident
+L: 44 C: 6 KeywordDecl ident localizado
+L: 44 C: 13 KeywordDecl buscado conjunto de ident
+L: 44 C: 18 KeywordDecl keyword encontrado
+L: 45 C: 3 KeywordDecl lectura ident
+L: 45 C: 9 KeywordDecl ident localizado
+L: 45 C: 13 KeywordDecl buscado conjunto de ident
+L: 45 C: 17 KeywordDecl keyword encontrado
+L: 46 C: 3 KeywordDecl lectura ident
+L: 46 C: 9 KeywordDecl ident localizado
+L: 46 C: 13 KeywordDecl buscado conjunto de ident
+L: 46 C: 17 KeywordDecl keyword encontrado
+L: 47 C: 3 KeywordDecl lectura ident
+L: 47 C: 7 KeywordDecl ident localizado
+L: 47 C: 13 KeywordDecl buscado conjunto de ident
+L: 47 C: 17 KeywordDecl keyword encontrado
+L: 48 C: 3 KeywordDecl lectura ident
+L: 48 C: 8 KeywordDecl ident localizado
+L: 48 C: 13 KeywordDecl buscado conjunto de ident
+L: 48 C: 17 KeywordDecl keyword encontrado
+L: 49 C: 3 KeywordDecl lectura ident
+L: 49 C: 6 KeywordDecl ident localizado
+L: 49 C: 13 KeywordDecl buscado conjunto de ident
+L: 49 C: 17 KeywordDecl keyword encontrado
+L: 50 C: 3 KeywordDecl lectura ident
+L: 50 C: 7 KeywordDecl ident localizado
+L: 50 C: 13 KeywordDecl buscado conjunto de ident
+L: 50 C: 17 KeywordDecl keyword encontrado
+L: 51 C: 3 KeywordDecl lectura ident
+L: 51 C: 9 KeywordDecl ident localizado
+L: 51 C: 13 KeywordDecl buscado conjunto de ident
+L: 51 C: 17 KeywordDecl keyword encontrado
+L: 52 C: 3 KeywordDecl lectura ident
+L: 52 C: 9 KeywordDecl ident localizado
+L: 52 C: 13 KeywordDecl buscado conjunto de ident
+L: 52 C: 17 KeywordDecl keyword encontrado
+L: 53 C: 3 KeywordDecl lectura ident
+L: 53 C: 7 KeywordDecl ident localizado
+L: 53 C: 13 KeywordDecl buscado conjunto de ident
+L: 53 C: 17 KeywordDecl keyword encontrado
+L: 54 C: 3 KeywordDecl lectura ident
+L: 54 C: 8 KeywordDecl ident localizado
+L: 54 C: 13 KeywordDecl buscado conjunto de ident
+L: 54 C: 17 KeywordDecl keyword encontrado
+L: 56 C: 1 KeywordDecl lectura ident
+L: 56 C: 7 KeywordDecl ident localizado
+L: 56 C: 1 lectura TOKENS
+L: 56 C: 7 lectura TokenDecl
+L: 57 C: 3 TokenDecl lectura ident
+L: 57 C: 8 TokenDecl iden encontrado
+L: 57 C: 11 TokenDecl lectura TokenExpr
+L: 57 C: 11 TokenExpr lectura TokenTerm
+L: 57 C: 11 TokenTerm lectura TokenFactor
+L: 57 C: 11 TokenFactor lectura symbolo
+L: 56 C: 18 TokenTerm lectura {TokenFactor}
+L: 56 C: 18 TokenFactor lectura symbolo
+L: 56 C: 20 TokenFactor lectura {TokenExpr}
+L: 56 C: 20 TokenExpr lectura TokenTerm
+L: 56 C: 20 TokenTerm lectura TokenFactor
+L: 56 C: 20 TokenFactor lectura symbolo
+L: 56 C: 27 TokenTerm lectura {TokenFactor}
+L: 56 C: 27 TokenFactor lectura symbolo
+L: 56 C: 29 TokenExpr lectura | Token Term
+L: 56 C: 29 TokenTerm lectura TokenFactor
+L: 56 C: 29 TokenFactor lectura symbolo
+L: 56 C: 35 TokenTerm lectura {TokenFactor}
+L: 56 C: 35 TokenFactor lectura symbolo
+L: 56 C: 37 TokenTerm lectura {TokenFactor}
+L: 56 C: 37 TokenFactor lectura symbolo
+L: 56 C: 37 KeywordDecl lectura EXCEPT KEYWORDS
+L: 58 C: 3 TokenDecl lectura ident
+L: 58 C: 9 TokenDecl iden encontrado
+L: 58 C: 12 TokenDecl lectura TokenExpr
+L: 58 C: 12 TokenExpr lectura TokenTerm
+L: 58 C: 12 TokenTerm lectura TokenFactor
+L: 58 C: 12 TokenFactor lectura symbolo
+L: 58 C: 15 TokenFactor lectura (TokenExpr)
+L: 58 C: 15 TokenExpr lectura TokenTerm
+L: 58 C: 15 TokenTerm lectura TokenFactor
+L: 58 C: 15 TokenFactor lectura symbolo
+L: 58 C: 20 TokenTerm lectura {TokenFactor}
+L: 58 C: 20 TokenFactor lectura symbolo
+L: 58 C: 22 TokenExpr lectura | Token Term
+L: 58 C: 22 TokenTerm lectura TokenFactor
+L: 58 C: 22 TokenFactor lectura symbolo
+L: 58 C: 35 TokenTerm lectura {TokenFactor}
+L: 58 C: 35 TokenFactor lectura symbolo
+L: 58 C: 37 TokenFactor lectura {TokenExpr}
+L: 58 C: 37 TokenExpr lectura TokenTerm
+L: 58 C: 37 TokenTerm lectura TokenFactor
+L: 58 C: 37 TokenFactor lectura symbolo
+L: 58 C: 43 TokenTerm lectura {TokenFactor}
+L: 58 C: 43 TokenFactor lectura symbolo
+L: 58 C: 45 TokenTerm lectura {TokenFactor}
+L: 58 C: 45 TokenFactor lectura symbolo
+L: 58 C: 47 TokenExpr lectura | Token Term
+L: 58 C: 47 TokenTerm lectura TokenFactor
+L: 58 C: 47 TokenFactor lectura symbolo
+L: 58 C: 49 TokenFactor lectura (TokenExpr)
+L: 58 C: 49 TokenExpr lectura TokenTerm
+L: 58 C: 49 TokenTerm lectura TokenFactor
+L: 58 C: 49 TokenFactor lectura symbolo
+L: 58 C: 54 TokenTerm lectura {TokenFactor}
+L: 58 C: 54 TokenFactor lectura symbolo
+L: 58 C: 56 TokenExpr lectura | Token Term
+L: 58 C: 56 TokenTerm lectura TokenFactor
+L: 58 C: 56 TokenFactor lectura symbolo
+L: 58 C: 61 TokenTerm lectura {TokenFactor}
+L: 58 C: 61 TokenFactor lectura symbolo
+L: 58 C: 63 TokenTerm lectura {TokenFactor}
+L: 58 C: 63 TokenFactor lectura symbolo
+L: 58 C: 72 TokenTerm lectura {TokenFactor}
+L: 58 C: 72 TokenFactor lectura symbolo
+L: 58 C: 74 TokenFactor lectura {TokenExpr}
+L: 58 C: 74 TokenExpr lectura TokenTerm
+L: 58 C: 74 TokenTerm lectura TokenFactor
+L: 58 C: 74 TokenFactor lectura symbolo
+L: 58 C: 83 TokenTerm lectura {TokenFactor}
+L: 58 C: 83 TokenFactor lectura symbolo
+L: 58 C: 85 TokenTerm lectura {TokenFactor}
+L: 58 C: 85 TokenFactor lectura symbolo
+L: 58 C: 87 TokenExpr lectura | Token Term
+L: 58 C: 87 TokenTerm lectura TokenFactor
+L: 58 C: 87 TokenFactor lectura symbolo
+L: 58 C: 91 TokenTerm lectura {TokenFactor}
+L: 58 C: 91 TokenFactor lectura symbolo
+L: 58 C: 102 TokenTerm lectura {TokenFactor}
+L: 58 C: 102 TokenFactor lectura symbolo
+L: 58 C: 104 TokenFactor lectura {TokenExpr}
+L: 58 C: 104 TokenExpr lectura TokenTerm
+L: 58 C: 104 TokenTerm lectura TokenFactor
+L: 58 C: 104 TokenFactor lectura symbolo
+L: 58 C: 115 TokenTerm lectura {TokenFactor}
+L: 58 C: 115 TokenFactor lectura symbolo
+L: 58 C: 117 TokenTerm lectura {TokenFactor}
+L: 58 C: 117 TokenFactor lectura symbolo
+L: 58 C: 119 TokenTerm lectura {TokenFactor}
+L: 58 C: 119 TokenFactor lectura symbolo
+L: 58 C: 121 TokenFactor lectura [TokenExpr]
+L: 58 C: 121 TokenExpr lectura TokenTerm
+L: 58 C: 121 TokenTerm lectura TokenFactor
+L: 58 C: 121 TokenFactor lectura symbolo
+L: 58 C: 125 TokenTerm lectura {TokenFactor}
+L: 58 C: 125 TokenFactor lectura symbolo
+L: 58 C: 127 TokenExpr lectura | Token Term
+L: 58 C: 127 TokenTerm lectura TokenFactor
+L: 58 C: 127 TokenFactor lectura symbolo
+L: 58 C: 131 TokenTerm lectura {TokenFactor}
+L: 58 C: 131 TokenFactor lectura symbolo
+L: 58 C: 132 TokenTerm lectura {TokenFactor}
+L: 58 C: 132 TokenFactor lectura symbolo
+L: 58 C: 132 KeywordDecl lectura EXCEPT KEYWORDS
+L: 60 C: 3 TokenDecl lectura ident
+L: 60 C: 11 TokenDecl iden encontrado
+L: 60 C: 14 TokenDecl lectura TokenExpr
+L: 60 C: 14 TokenExpr lectura TokenTerm
+L: 60 C: 14 TokenTerm lectura TokenFactor
+L: 60 C: 14 TokenFactor lectura symbolo
+L: 60 C: 18 TokenTerm lectura {TokenFactor}
+L: 60 C: 18 TokenFactor lectura symbolo
+L: 60 C: 24 TokenTerm lectura {TokenFactor}
+L: 60 C: 24 TokenFactor lectura symbolo
+L: 60 C: 25 TokenFactor lectura {TokenExpr}
+L: 60 C: 25 TokenExpr lectura TokenTerm
+L: 60 C: 25 TokenTerm lectura TokenFactor
+L: 60 C: 25 TokenFactor lectura symbolo
+L: 60 C: 30 TokenTerm lectura {TokenFactor}
+L: 60 C: 30 TokenFactor lectura symbolo
+L: 60 C: 32 TokenTerm lectura {TokenFactor}
+L: 60 C: 32 TokenFactor lectura symbolo
+L: 60 C: 33 TokenFactor lectura [TokenExpr]
+L: 60 C: 33 TokenExpr lectura TokenTerm
+L: 60 C: 33 TokenTerm lectura TokenFactor
+L: 60 C: 33 TokenFactor lectura symbolo
+L: 60 C: 34 TokenFactor lectura (TokenExpr)
+L: 60 C: 34 TokenExpr lectura TokenTerm
+L: 60 C: 34 TokenTerm lectura TokenFactor
+L: 60 C: 34 TokenFactor lectura symbolo
+L: 60 C: 38 TokenTerm lectura {TokenFactor}
+L: 60 C: 38 TokenFactor lectura symbolo
+L: 60 C: 40 TokenExpr lectura | Token Term
+L: 60 C: 40 TokenTerm lectura TokenFactor
+L: 60 C: 40 TokenFactor lectura symbolo
+L: 60 C: 43 TokenTerm lectura {TokenFactor}
+L: 60 C: 43 TokenFactor lectura symbolo
+L: 60 C: 45 TokenTerm lectura {TokenFactor}
+L: 60 C: 45 TokenFactor lectura symbolo
+L: 60 C: 46 TokenFactor lectura [TokenExpr]
+L: 60 C: 46 TokenExpr lectura TokenTerm
+L: 60 C: 46 TokenTerm lectura TokenFactor
+L: 60 C: 46 TokenFactor lectura symbolo
+L: 60 C: 50 TokenTerm lectura {TokenFactor}
+L: 60 C: 50 TokenFactor lectura symbolo
+L: 60 C: 52 TokenExpr lectura | Token Term
+L: 60 C: 52 TokenTerm lectura TokenFactor
+L: 60 C: 52 TokenFactor lectura symbolo
+L: 60 C: 55 TokenTerm lectura {TokenFactor}
+L: 60 C: 55 TokenFactor lectura symbolo
+L: 60 C: 57 TokenTerm lectura {TokenFactor}
+L: 60 C: 57 TokenFactor lectura symbolo
+L: 61 C: 5 TokenTerm lectura {TokenFactor}
+L: 61 C: 5 TokenFactor lectura symbolo
+L: 61 C: 6 TokenFactor lectura {TokenExpr}
+L: 61 C: 6 TokenExpr lectura TokenTerm
+L: 61 C: 6 TokenTerm lectura TokenFactor
+L: 61 C: 6 TokenFactor lectura symbolo
+L: 61 C: 11 TokenTerm lectura {TokenFactor}
+L: 61 C: 11 TokenFactor lectura symbolo
+L: 61 C: 12 TokenTerm lectura {TokenFactor}
+L: 61 C: 12 TokenFactor lectura symbolo
+L: 61 C: 14 TokenTerm lectura {TokenFactor}
+L: 61 C: 14 TokenFactor lectura symbolo
+L: 61 C: 16 TokenFactor lectura [TokenExpr]
+L: 61 C: 16 TokenExpr lectura TokenTerm
+L: 61 C: 16 TokenTerm lectura TokenFactor
+L: 61 C: 16 TokenFactor lectura symbolo
+L: 61 C: 20 TokenTerm lectura {TokenFactor}
+L: 61 C: 20 TokenFactor lectura symbolo
+L: 61 C: 22 TokenExpr lectura | Token Term
+L: 61 C: 22 TokenTerm lectura TokenFactor
+L: 61 C: 22 TokenFactor lectura symbolo
+L: 61 C: 26 TokenTerm lectura {TokenFactor}
+L: 61 C: 26 TokenFactor lectura symbolo
+L: 61 C: 28 TokenExpr lectura | Token Term
+L: 61 C: 28 TokenTerm lectura TokenFactor
+L: 61 C: 28 TokenFactor lectura symbolo
+L: 61 C: 32 TokenTerm lectura {TokenFactor}
+L: 61 C: 32 TokenFactor lectura symbolo
+L: 61 C: 34 TokenExpr lectura | Token Term
+L: 61 C: 34 TokenTerm lectura TokenFactor
+L: 61 C: 34 TokenFactor lectura symbolo
+L: 61 C: 38 TokenTerm lectura {TokenFactor}
+L: 61 C: 38 TokenFactor lectura symbolo
+L: 62 C: 5 TokenTerm lectura {TokenFactor}
+L: 62 C: 5 TokenFactor lectura symbolo
+L: 62 C: 7 TokenExpr lectura | Token Term
+L: 62 C: 7 TokenTerm lectura TokenFactor
+L: 62 C: 7 TokenFactor lectura symbolo
+L: 62 C: 13 TokenTerm lectura {TokenFactor}
+L: 62 C: 13 TokenFactor lectura symbolo
+L: 62 C: 14 TokenFactor lectura {TokenExpr}
+L: 62 C: 14 TokenExpr lectura TokenTerm
+L: 62 C: 14 TokenTerm lectura TokenFactor
+L: 62 C: 14 TokenFactor lectura symbolo
+L: 62 C: 19 TokenTerm lectura {TokenFactor}
+L: 62 C: 19 TokenFactor lectura symbolo
+L: 62 C: 21 TokenTerm lectura {TokenFactor}
+L: 62 C: 21 TokenFactor lectura symbolo
+L: 62 C: 23 TokenFactor lectura (TokenExpr)
+L: 62 C: 23 TokenExpr lectura TokenTerm
+L: 62 C: 23 TokenTerm lectura TokenFactor
+L: 62 C: 23 TokenFactor lectura symbolo
+L: 62 C: 27 TokenTerm lectura {TokenFactor}
+L: 62 C: 27 TokenFactor lectura symbolo
+L: 62 C: 28 TokenFactor lectura {TokenExpr}
+L: 62 C: 28 TokenExpr lectura TokenTerm
+L: 62 C: 28 TokenTerm lectura TokenFactor
+L: 62 C: 28 TokenFactor lectura symbolo
+L: 62 C: 33 TokenTerm lectura {TokenFactor}
+L: 62 C: 33 TokenFactor lectura symbolo
+L: 62 C: 35 TokenTerm lectura {TokenFactor}
+L: 62 C: 35 TokenFactor lectura symbolo
+L: 62 C: 37 TokenFactor lectura [TokenExpr]
+L: 62 C: 37 TokenExpr lectura TokenTerm
+L: 62 C: 37 TokenTerm lectura TokenFactor
+L: 62 C: 37 TokenFactor lectura symbolo
+L: 62 C: 38 TokenFactor lectura (TokenExpr)
+L: 62 C: 38 TokenExpr lectura TokenTerm
+L: 62 C: 38 TokenTerm lectura TokenFactor
+L: 62 C: 38 TokenFactor lectura symbolo
+L: 62 C: 42 TokenTerm lectura {TokenFactor}
+L: 62 C: 42 TokenFactor lectura symbolo
+L: 62 C: 44 TokenExpr lectura | Token Term
+L: 62 C: 44 TokenTerm lectura TokenFactor
+L: 62 C: 44 TokenFactor lectura symbolo
+L: 62 C: 48 TokenTerm lectura {TokenFactor}
+L: 62 C: 48 TokenFactor lectura symbolo
+L: 63 C: 5 TokenTerm lectura {TokenFactor}
+L: 63 C: 5 TokenFactor lectura symbolo
+L: 63 C: 7 TokenFactor lectura [TokenExpr]
+L: 63 C: 7 TokenExpr lectura TokenTerm
+L: 63 C: 7 TokenTerm lectura TokenFactor
+L: 63 C: 7 TokenFactor lectura symbolo
+L: 63 C: 11 TokenTerm lectura {TokenFactor}
+L: 63 C: 11 TokenFactor lectura symbolo
+L: 63 C: 13 TokenExpr lectura | Token Term
+L: 63 C: 13 TokenTerm lectura TokenFactor
+L: 63 C: 13 TokenFactor lectura symbolo
+L: 63 C: 17 TokenTerm lectura {TokenFactor}
+L: 63 C: 17 TokenFactor lectura symbolo
+L: 63 C: 19 TokenTerm lectura {TokenFactor}
+L: 63 C: 19 TokenFactor lectura symbolo
+L: 63 C: 25 TokenTerm lectura {TokenFactor}
+L: 63 C: 25 TokenFactor lectura symbolo
+L: 63 C: 26 TokenFactor lectura {TokenExpr}
+L: 63 C: 26 TokenExpr lectura TokenTerm
+L: 63 C: 26 TokenTerm lectura TokenFactor
+L: 63 C: 26 TokenFactor lectura symbolo
+L: 63 C: 31 TokenTerm lectura {TokenFactor}
+L: 63 C: 31 TokenFactor lectura symbolo
+L: 63 C: 33 TokenTerm lectura {TokenFactor}
+L: 63 C: 33 TokenFactor lectura symbolo
+L: 64 C: 5 TokenTerm lectura {TokenFactor}
+L: 64 C: 5 TokenFactor lectura symbolo
+L: 64 C: 7 TokenFactor lectura [TokenExpr]
+L: 64 C: 7 TokenExpr lectura TokenTerm
+L: 64 C: 7 TokenTerm lectura TokenFactor
+L: 64 C: 7 TokenFactor lectura symbolo
+L: 64 C: 11 TokenTerm lectura {TokenFactor}
+L: 64 C: 11 TokenFactor lectura symbolo
+L: 64 C: 13 TokenExpr lectura | Token Term
+L: 64 C: 13 TokenTerm lectura TokenFactor
+L: 64 C: 13 TokenFactor lectura symbolo
+L: 64 C: 17 TokenTerm lectura {TokenFactor}
+L: 64 C: 17 TokenFactor lectura symbolo
+L: 64 C: 19 TokenExpr lectura | Token Term
+L: 64 C: 19 TokenTerm lectura TokenFactor
+L: 64 C: 19 TokenFactor lectura symbolo
+L: 64 C: 23 TokenTerm lectura {TokenFactor}
+L: 64 C: 23 TokenFactor lectura symbolo
+L: 64 C: 25 TokenExpr lectura | Token Term
+L: 64 C: 25 TokenTerm lectura TokenFactor
+L: 64 C: 25 TokenFactor lectura symbolo
+L: 64 C: 29 TokenTerm lectura {TokenFactor}
+L: 64 C: 29 TokenFactor lectura symbolo
+L: 65 C: 5 TokenTerm lectura {TokenFactor}
+L: 65 C: 5 TokenFactor lectura symbolo
+L: 66 C: 7 TokenExpr lectura | Token Term
+L: 66 C: 7 TokenTerm lectura TokenFactor
+L: 66 C: 7 TokenFactor lectura symbolo
+L: 65 C: 8 TokenFactor lectura (TokenExpr)
+L: 65 C: 8 TokenExpr lectura TokenTerm
+L: 65 C: 8 TokenTerm lectura TokenFactor
+L: 65 C: 8 TokenFactor lectura symbolo
+L: 65 C: 12 TokenTerm lectura {TokenFactor}
+L: 65 C: 12 TokenFactor lectura symbolo
+L: 65 C: 14 TokenExpr lectura | Token Term
+L: 65 C: 14 TokenTerm lectura TokenFactor
+L: 65 C: 14 TokenFactor lectura symbolo
+L: 65 C: 17 TokenTerm lectura {TokenFactor}
+L: 65 C: 17 TokenFactor lectura symbolo
+L: 65 C: 19 TokenTerm lectura {TokenFactor}
+L: 65 C: 19 TokenFactor lectura symbolo
+L: 65 C: 21 TokenFactor lectura [TokenExpr]
+L: 65 C: 21 TokenExpr lectura TokenTerm
+L: 65 C: 21 TokenTerm lectura TokenFactor
+L: 65 C: 21 TokenFactor lectura symbolo
+L: 65 C: 25 TokenTerm lectura {TokenFactor}
+L: 65 C: 25 TokenFactor lectura symbolo
+L: 65 C: 27 TokenExpr lectura | Token Term
+L: 65 C: 27 TokenTerm lectura TokenFactor
+L: 65 C: 27 TokenFactor lectura symbolo
+L: 65 C: 31 TokenTerm lectura {TokenFactor}
+L: 65 C: 31 TokenFactor lectura symbolo
+L: 65 C: 33 TokenTerm lectura {TokenFactor}
+L: 65 C: 33 TokenFactor lectura symbolo
+L: 65 C: 39 TokenTerm lectura {TokenFactor}
+L: 65 C: 39 TokenFactor lectura symbolo
+L: 65 C: 40 TokenFactor lectura {TokenExpr}
+L: 65 C: 40 TokenExpr lectura TokenTerm
+L: 65 C: 40 TokenTerm lectura TokenFactor
+L: 65 C: 40 TokenFactor lectura symbolo
+L: 65 C: 45 TokenTerm lectura {TokenFactor}
+L: 65 C: 45 TokenFactor lectura symbolo
+L: 66 C: 7 TokenTerm lectura {TokenFactor}
+L: 66 C: 7 TokenFactor lectura symbolo
+L: 66 C: 9 TokenFactor lectura [TokenExpr]
+L: 66 C: 9 TokenExpr lectura TokenTerm
+L: 66 C: 9 TokenTerm lectura TokenFactor
+L: 66 C: 9 TokenFactor lectura symbolo
+L: 66 C: 13 TokenTerm lectura {TokenFactor}
+L: 66 C: 13 TokenFactor lectura symbolo
+L: 66 C: 15 TokenExpr lectura | Token Term
+L: 66 C: 15 TokenTerm lectura TokenFactor
+L: 66 C: 15 TokenFactor lectura symbolo
+L: 66 C: 19 TokenTerm lectura {TokenFactor}
+L: 66 C: 19 TokenFactor lectura symbolo
+L: 66 C: 21 TokenExpr lectura | Token Term
+L: 66 C: 21 TokenTerm lectura TokenFactor
+L: 66 C: 21 TokenFactor lectura symbolo
+L: 66 C: 25 TokenTerm lectura {TokenFactor}
+L: 66 C: 25 TokenFactor lectura symbolo
+L: 66 C: 27 TokenExpr lectura | Token Term
+L: 66 C: 27 TokenTerm lectura TokenFactor
+L: 66 C: 27 TokenFactor lectura symbolo
+L: 66 C: 31 TokenTerm lectura {TokenFactor}
+L: 66 C: 31 TokenFactor lectura symbolo
+L: 67 C: 5 TokenTerm lectura {TokenFactor}
+L: 67 C: 5 TokenFactor lectura symbolo
+L: 68 C: 7 TokenExpr lectura | Token Term
+L: 68 C: 7 TokenTerm lectura TokenFactor
+L: 68 C: 7 TokenFactor lectura symbolo
+L: 67 C: 11 TokenTerm lectura {TokenFactor}
+L: 67 C: 11 TokenFactor lectura symbolo
+L: 67 C: 13 TokenExpr lectura | Token Term
+L: 67 C: 13 TokenTerm lectura TokenFactor
+L: 67 C: 13 TokenFactor lectura symbolo
+L: 67 C: 17 TokenTerm lectura {TokenFactor}
+L: 67 C: 17 TokenFactor lectura symbolo
+L: 67 C: 19 TokenExpr lectura | Token Term
+L: 67 C: 19 TokenTerm lectura TokenFactor
+L: 67 C: 19 TokenFactor lectura symbolo
+L: 67 C: 23 TokenTerm lectura {TokenFactor}
+L: 67 C: 23 TokenFactor lectura symbolo
+L: 67 C: 25 TokenExpr lectura | Token Term
+L: 67 C: 25 TokenTerm lectura TokenFactor
+L: 67 C: 25 TokenFactor lectura symbolo
+L: 68 C: 5 TokenTerm lectura {TokenFactor}
+L: 68 C: 5 TokenFactor lectura symbolo
+L: 69 C: 7 TokenTerm lectura {TokenFactor}
+L: 69 C: 7 TokenFactor lectura symbolo
+L: 68 C: 6 KeywordDecl lectura EXCEPT KEYWORDS
+L: 71 C: 3 TokenDecl lectura ident
+L: 71 C: 10 TokenDecl iden encontrado
+L: 72 C: 5 TokenDecl lectura TokenExpr
+L: 72 C: 5 TokenExpr lectura TokenTerm
+L: 72 C: 5 TokenTerm lectura TokenFactor
+L: 72 C: 5 TokenFactor lectura symbolo
+L: 72 C: 9 TokenTerm lectura {TokenFactor}
+L: 72 C: 9 TokenFactor lectura symbolo
+L: 72 C: 11 TokenFactor lectura (TokenExpr)
+L: 72 C: 11 TokenExpr lectura TokenTerm
+L: 72 C: 11 TokenTerm lectura TokenFactor
+L: 72 C: 11 TokenFactor lectura symbolo
+L: 74 C: 9 TokenTerm lectura {TokenFactor}
+L: 74 C: 9 TokenFactor lectura symbolo
+L: 74 C: 11 TokenExpr lectura | Token Term
+L: 74 C: 11 TokenTerm lectura TokenFactor
+L: 74 C: 11 TokenFactor lectura symbolo
+L: 73 C: 16 TokenTerm lectura {TokenFactor}
+L: 73 C: 16 TokenFactor lectura symbolo
+L: 73 C: 18 TokenFactor lectura (TokenExpr)
+L: 73 C: 18 TokenExpr lectura TokenTerm
+L: 73 C: 18 TokenTerm lectura TokenFactor
+L: 73 C: 18 TokenFactor lectura symbolo
+L: 73 C: 22 TokenTerm lectura {TokenFactor}
+L: 73 C: 22 TokenFactor lectura symbolo
+L: 73 C: 24 TokenExpr lectura | Token Term
+L: 73 C: 24 TokenTerm lectura TokenFactor
+L: 73 C: 24 TokenFactor lectura symbolo
+L: 73 C: 28 TokenTerm lectura {TokenFactor}
+L: 73 C: 28 TokenFactor lectura symbolo
+L: 73 C: 30 TokenExpr lectura | Token Term
+L: 73 C: 30 TokenTerm lectura TokenFactor
+L: 73 C: 30 TokenFactor lectura symbolo
+L: 73 C: 34 TokenTerm lectura {TokenFactor}
+L: 73 C: 34 TokenFactor lectura symbolo
+L: 73 C: 36 TokenExpr lectura | Token Term
+L: 73 C: 36 TokenTerm lectura TokenFactor
+L: 73 C: 36 TokenFactor lectura symbolo
+L: 73 C: 40 TokenTerm lectura {TokenFactor}
+L: 73 C: 40 TokenFactor lectura symbolo
+L: 73 C: 42 TokenExpr lectura | Token Term
+L: 73 C: 42 TokenTerm lectura TokenFactor
+L: 73 C: 42 TokenFactor lectura symbolo
+L: 73 C: 46 TokenTerm lectura {TokenFactor}
+L: 73 C: 46 TokenFactor lectura symbolo
+L: 73 C: 48 TokenExpr lectura | Token Term
+L: 73 C: 48 TokenTerm lectura TokenFactor
+L: 73 C: 48 TokenFactor lectura symbolo
+L: 73 C: 53 TokenTerm lectura {TokenFactor}
+L: 73 C: 53 TokenFactor lectura symbolo
+L: 73 C: 55 TokenExpr lectura | Token Term
+L: 73 C: 55 TokenTerm lectura TokenFactor
+L: 73 C: 55 TokenFactor lectura symbolo
+L: 73 C: 60 TokenTerm lectura {TokenFactor}
+L: 73 C: 60 TokenFactor lectura symbolo
+L: 73 C: 62 TokenExpr lectura | Token Term
+L: 73 C: 62 TokenTerm lectura TokenFactor
+L: 73 C: 62 TokenFactor lectura symbolo
+L: 74 C: 16 TokenTerm lectura {TokenFactor}
+L: 74 C: 16 TokenFactor lectura symbolo
+L: 75 C: 18 TokenExpr lectura | Token Term
+L: 75 C: 18 TokenTerm lectura TokenFactor
+L: 75 C: 18 TokenFactor lectura symbolo
+L: 74 C: 22 TokenTerm lectura {TokenFactor}
+L: 74 C: 22 TokenFactor lectura symbolo
+L: 74 C: 24 TokenFactor lectura {TokenExpr}
+L: 74 C: 24 TokenExpr lectura TokenTerm
+L: 74 C: 24 TokenTerm lectura TokenFactor
+L: 74 C: 24 TokenFactor lectura symbolo
+L: 74 C: 28 TokenTerm lectura {TokenFactor}
+L: 74 C: 28 TokenFactor lectura symbolo
+L: 74 C: 30 TokenTerm lectura {TokenFactor}
+L: 74 C: 30 TokenFactor lectura symbolo
+L: 74 C: 39 TokenTerm lectura {TokenFactor}
+L: 74 C: 39 TokenFactor lectura symbolo
+L: 74 C: 48 TokenTerm lectura {TokenFactor}
+L: 74 C: 48 TokenFactor lectura symbolo
+L: 74 C: 57 TokenTerm lectura {TokenFactor}
+L: 74 C: 57 TokenFactor lectura symbolo
+L: 76 C: 16 TokenTerm lectura {TokenFactor}
+L: 76 C: 16 TokenFactor lectura symbolo
+L: 76 C: 18 TokenExpr lectura | Token Term
+L: 76 C: 18 TokenTerm lectura TokenFactor
+L: 76 C: 18 TokenFactor lectura symbolo
+L: 75 C: 30 TokenTerm lectura {TokenFactor}
+L: 75 C: 30 TokenFactor lectura symbolo
+L: 75 C: 32 TokenFactor lectura [TokenExpr]
+L: 75 C: 32 TokenExpr lectura TokenTerm
+L: 75 C: 32 TokenTerm lectura TokenFactor
+L: 75 C: 32 TokenFactor lectura symbolo
+L: 75 C: 43 TokenTerm lectura {TokenFactor}
+L: 75 C: 43 TokenFactor lectura symbolo
+L: 75 C: 45 TokenTerm lectura {TokenFactor}
+L: 75 C: 45 TokenFactor lectura symbolo
+L: 75 C: 47 TokenFactor lectura [TokenExpr]
+L: 75 C: 47 TokenExpr lectura TokenTerm
+L: 75 C: 47 TokenTerm lectura TokenFactor
+L: 75 C: 47 TokenFactor lectura symbolo
+L: 75 C: 58 TokenTerm lectura {TokenFactor}
+L: 75 C: 58 TokenFactor lectura symbolo
+L: 76 C: 16 TokenTerm lectura {TokenFactor}
+L: 76 C: 16 TokenFactor lectura symbolo
+L: 77 C: 18 TokenExpr lectura | Token Term
+L: 77 C: 18 TokenTerm lectura TokenFactor
+L: 77 C: 18 TokenFactor lectura symbolo
+L: 76 C: 29 TokenTerm lectura {TokenFactor}
+L: 76 C: 29 TokenFactor lectura symbolo
+L: 76 C: 31 TokenFactor lectura [TokenExpr]
+L: 76 C: 31 TokenExpr lectura TokenTerm
+L: 76 C: 31 TokenTerm lectura TokenFactor
+L: 76 C: 31 TokenFactor lectura symbolo
+L: 76 C: 42 TokenTerm lectura {TokenFactor}
+L: 76 C: 42 TokenFactor lectura symbolo
+L: 77 C: 16 TokenTerm lectura {TokenFactor}
+L: 77 C: 16 TokenFactor lectura symbolo
+L: 79 C: 9 TokenTerm lectura {TokenFactor}
+L: 79 C: 9 TokenFactor lectura symbolo
+L: 80 C: 5 TokenTerm lectura {TokenFactor}
+L: 80 C: 5 TokenFactor lectura symbolo
+L: 79 C: 9 TokenTerm lectura {TokenFactor}
+L: 79 C: 9 TokenFactor lectura symbolo
+L: 79 C: 9 KeywordDecl lectura EXCEPT KEYWORDS
+L: 81 C: 3 TokenDecl lectura ident
+L: 81 C: 12 TokenDecl iden encontrado
+L: 82 C: 5 TokenDecl lectura TokenExpr
+L: 82 C: 5 TokenExpr lectura TokenTerm
+L: 82 C: 5 TokenTerm lectura TokenFactor
+L: 82 C: 5 TokenFactor lectura symbolo
+L: 82 C: 10 TokenTerm lectura {TokenFactor}
+L: 82 C: 10 TokenFactor lectura symbolo
+L: 82 C: 12 TokenFactor lectura {TokenExpr}
+L: 82 C: 12 TokenExpr lectura TokenTerm
+L: 82 C: 12 TokenTerm lectura TokenFactor
+L: 82 C: 12 TokenFactor lectura symbolo
+L: 84 C: 10 TokenTerm lectura {TokenFactor}
+L: 84 C: 10 TokenFactor lectura symbolo
+L: 84 C: 12 TokenExpr lectura | Token Term
+L: 84 C: 12 TokenTerm lectura TokenFactor
+L: 84 C: 12 TokenFactor lectura symbolo
+L: 83 C: 17 TokenTerm lectura {TokenFactor}
+L: 83 C: 17 TokenFactor lectura symbolo
+L: 83 C: 19 TokenFactor lectura (TokenExpr)
+L: 83 C: 19 TokenExpr lectura TokenTerm
+L: 83 C: 19 TokenTerm lectura TokenFactor
+L: 83 C: 19 TokenFactor lectura symbolo
+L: 83 C: 23 TokenTerm lectura {TokenFactor}
+L: 83 C: 23 TokenFactor lectura symbolo
+L: 83 C: 25 TokenExpr lectura | Token Term
+L: 83 C: 25 TokenTerm lectura TokenFactor
+L: 83 C: 25 TokenFactor lectura symbolo
+L: 83 C: 29 TokenTerm lectura {TokenFactor}
+L: 83 C: 29 TokenFactor lectura symbolo
+L: 83 C: 31 TokenExpr lectura | Token Term
+L: 83 C: 31 TokenTerm lectura TokenFactor
+L: 83 C: 31 TokenFactor lectura symbolo
+L: 83 C: 35 TokenTerm lectura {TokenFactor}
+L: 83 C: 35 TokenFactor lectura symbolo
+L: 83 C: 37 TokenExpr lectura | Token Term
+L: 83 C: 37 TokenTerm lectura TokenFactor
+L: 83 C: 37 TokenFactor lectura symbolo
+L: 83 C: 41 TokenTerm lectura {TokenFactor}
+L: 83 C: 41 TokenFactor lectura symbolo
+L: 83 C: 43 TokenExpr lectura | Token Term
+L: 83 C: 43 TokenTerm lectura TokenFactor
+L: 83 C: 43 TokenFactor lectura symbolo
+L: 83 C: 47 TokenTerm lectura {TokenFactor}
+L: 83 C: 47 TokenFactor lectura symbolo
+L: 83 C: 49 TokenExpr lectura | Token Term
+L: 83 C: 49 TokenTerm lectura TokenFactor
+L: 83 C: 49 TokenFactor lectura symbolo
+L: 83 C: 54 TokenTerm lectura {TokenFactor}
+L: 83 C: 54 TokenFactor lectura symbolo
+L: 83 C: 56 TokenExpr lectura | Token Term
+L: 83 C: 56 TokenTerm lectura TokenFactor
+L: 83 C: 56 TokenFactor lectura symbolo
+L: 83 C: 61 TokenTerm lectura {TokenFactor}
+L: 83 C: 61 TokenFactor lectura symbolo
+L: 83 C: 63 TokenExpr lectura | Token Term
+L: 83 C: 63 TokenTerm lectura TokenFactor
+L: 83 C: 63 TokenFactor lectura symbolo
+L: 84 C: 17 TokenTerm lectura {TokenFactor}
+L: 84 C: 17 TokenFactor lectura symbolo
+L: 85 C: 19 TokenExpr lectura | Token Term
+L: 85 C: 19 TokenTerm lectura TokenFactor
+L: 85 C: 19 TokenFactor lectura symbolo
+L: 84 C: 23 TokenTerm lectura {TokenFactor}
+L: 84 C: 23 TokenFactor lectura symbolo
+L: 84 C: 25 TokenFactor lectura {TokenExpr}
+L: 84 C: 25 TokenExpr lectura TokenTerm
+L: 84 C: 25 TokenTerm lectura TokenFactor
+L: 84 C: 25 TokenFactor lectura symbolo
+L: 84 C: 29 TokenTerm lectura {TokenFactor}
+L: 84 C: 29 TokenFactor lectura symbolo
+L: 84 C: 31 TokenTerm lectura {TokenFactor}
+L: 84 C: 31 TokenFactor lectura symbolo
+L: 84 C: 40 TokenTerm lectura {TokenFactor}
+L: 84 C: 40 TokenFactor lectura symbolo
+L: 84 C: 49 TokenTerm lectura {TokenFactor}
+L: 84 C: 49 TokenFactor lectura symbolo
+L: 84 C: 58 TokenTerm lectura {TokenFactor}
+L: 84 C: 58 TokenFactor lectura symbolo
+L: 86 C: 17 TokenTerm lectura {TokenFactor}
+L: 86 C: 17 TokenFactor lectura symbolo
+L: 86 C: 19 TokenExpr lectura | Token Term
+L: 86 C: 19 TokenTerm lectura TokenFactor
+L: 86 C: 19 TokenFactor lectura symbolo
+L: 85 C: 31 TokenTerm lectura {TokenFactor}
+L: 85 C: 31 TokenFactor lectura symbolo
+L: 85 C: 33 TokenFactor lectura [TokenExpr]
+L: 85 C: 33 TokenExpr lectura TokenTerm
+L: 85 C: 33 TokenTerm lectura TokenFactor
+L: 85 C: 33 TokenFactor lectura symbolo
+L: 85 C: 44 TokenTerm lectura {TokenFactor}
+L: 85 C: 44 TokenFactor lectura symbolo
+L: 85 C: 46 TokenTerm lectura {TokenFactor}
+L: 85 C: 46 TokenFactor lectura symbolo
+L: 85 C: 48 TokenFactor lectura [TokenExpr]
+L: 85 C: 48 TokenExpr lectura TokenTerm
+L: 85 C: 48 TokenTerm lectura TokenFactor
+L: 85 C: 48 TokenFactor lectura symbolo
+L: 85 C: 59 TokenTerm lectura {TokenFactor}
+L: 85 C: 59 TokenFactor lectura symbolo
+L: 86 C: 17 TokenTerm lectura {TokenFactor}
+L: 86 C: 17 TokenFactor lectura symbolo
+L: 87 C: 19 TokenExpr lectura | Token Term
+L: 87 C: 19 TokenTerm lectura TokenFactor
+L: 87 C: 19 TokenFactor lectura symbolo
+L: 86 C: 30 TokenTerm lectura {TokenFactor}
+L: 86 C: 30 TokenFactor lectura symbolo
+L: 86 C: 32 TokenFactor lectura [TokenExpr]
+L: 86 C: 32 TokenExpr lectura TokenTerm
+L: 86 C: 32 TokenTerm lectura TokenFactor
+L: 86 C: 32 TokenFactor lectura symbolo
+L: 86 C: 43 TokenTerm lectura {TokenFactor}
+L: 86 C: 43 TokenFactor lectura symbolo
+L: 87 C: 17 TokenTerm lectura {TokenFactor}
+L: 87 C: 17 TokenFactor lectura symbolo
+L: 89 C: 10 TokenTerm lectura {TokenFactor}
+L: 89 C: 10 TokenFactor lectura symbolo
+L: 90 C: 5 TokenTerm lectura {TokenFactor}
+L: 90 C: 5 TokenFactor lectura symbolo
+L: 89 C: 10 TokenTerm lectura {TokenFactor}
+L: 89 C: 10 TokenFactor lectura symbolo
+L: 89 C: 10 KeywordDecl lectura EXCEPT KEYWORDS
+L: 91 C: 1 TokenDecl lectura ident
+L: 91 C: 1 lectura PRODUCTIONS
+L: 91 C: 12 lectura Production
+L: 92 C: 3 Production lectura ident
+L: 93 C: 3 Production lectura ident
+L: 98 C: 1 Production lectura ident
+L: 92 C: 1 lectura WhiteSpaceDecl
+L: 90 C: 0 lectura ParserSpecification
+L: 92 C: 1 lectura PRODUCTIONS
+L: 92 C: 12 lectura Production
+L: 93 C: 3 Production lectura ident
+L: 93 C: 3 Production lectura ident
+L: 98 C: 1 Production lectura ident
+L: 99 C: 1 lectura END
+L: 99 C: 5 revision ident
+L: 99 C: 20 ident concuerda

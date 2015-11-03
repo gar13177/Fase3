@@ -13,8 +13,8 @@ CHARACTERS
   hexDigit      = digit + "ABCDEFabcdef" .
   letter        = 'A' .. 'Z' + 'a' .. 'z' + '_' + '$'.
 
-  char          = ANY - "'" - '\\' - cr - lf .
-  stringChar    = ANY - "\"" - '\\' - cr - lf .
+  char          = letter + digit  .
+  stringChar    = letter + digit.
   
 KEYWORDS
   boolean = "boolean".
@@ -70,7 +70,7 @@ TOKENS
 
   charLit = 
     "'" ( char
-        | "\\" ( "b" | "t" | "n" | "f" | "r" | "\"" | "\'" | "\\"
+        | "\\" ( "b" | "t" | "n" | "f" | "r" | '\"' | "\'" | "\\"
                | "u" { "u" } hexDigit hexDigit hexDigit hexDigit
                | zeroToThree [ octalDigit ] [ octalDigit ]
                | octalDigit [ octalDigit ]
@@ -79,14 +79,19 @@ TOKENS
     "'" .
 
   stringLit = 
-    "\"" { stringChar
-         | "\\" ( "b" | "t" | "n" | "f" | "r" | "\"" | "\'" | "\\"
+    '\"' { stringChar
+         | "\\" ( "b" | "t" | "n" | "f" | "r" | '\"' | "\'" | "\\"
                 | "u" { "u" } hexDigit hexDigit hexDigit hexDigit
                 | zeroToThree [ octalDigit ] [ octalDigit ]
                 | octalDigit [ octalDigit ]
                 )
          } 
-    "\"" EXCEPT KEYWORDS .
+    '\"' EXCEPT KEYWORDS .
+    
+PRODUCTIONS
+  token1 = "hola" | "nada".
+  token2 = token1 token1 token1.
+  
 
 
   

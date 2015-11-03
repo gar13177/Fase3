@@ -94,6 +94,7 @@ public class ScannerC {
     
     public int Peek(){
         if (charPos >= length) return -1;
+        
         return (int)charArray.get(charPos);
     }
     
@@ -108,7 +109,7 @@ public class ScannerC {
             column += 1;
         }
         charPos += 1;
-        //System.out.println(temp);
+        System.out.println(temp);
         return (int)temp;
     }
     
