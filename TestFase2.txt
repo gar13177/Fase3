@@ -89,8 +89,8 @@ TOKENS
     '\"' EXCEPT KEYWORDS .
     
 PRODUCTIONS
-  token1 = "hola" | "nada".
-  token2 = token1 token1 token1.
+  ProcDecl = Ident '(' ')' '{' {VarDecl | Stat} '}'.
+  Prueba = {Prueba (Prueba1 | Prueba2)} {Prueba1 | Prueba2} | Prueba.
   
 
 

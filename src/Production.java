@@ -1,3 +1,6 @@
+
+import java.util.ArrayList;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -10,16 +13,64 @@
  */
 public class Production {
     
-    private String cabeza = "";
-    private int tamano = 0;
-    
+    private ArrayList<Token> tokens = new ArrayList();
+    private int size = 0;
     
     public Production(){
         
     }
     
-    public void setHead(String st){
+    public Production (Production pd){
+        tokens = pd.getProduction();
+        size = tokens.size();
+    }
+    
+    public Production(Token tk){
+        tokens.add(tk);
+    }
+    
+    public ArrayList getProduction (){
+        return this.tokens;
+    }
+    
+    public void addToken(Token tk){
+        if (!tokens.contains(tk)){
+            tokens.add(tk);
+            size = tokens.size();
+        }
+    }
+    
+    public void addTokenInit(Token tk){
+        tokens.add(0,tk);//agregar elemento al inicio
+    }
+    
+    public boolean equals (Object o){
         
+        Production pd = (Production) o;
+        
+        
+        boolean val;
+        val = pd.getSize() == getSize();
+        if (val) {
+            for (int i = 0; i < getSize(); i++){
+                val = val && pd.getProduction().get(i).equals(tokens.get(i));
+            }
+        }
+        
+        return val;
+    }
+    
+    public int getSize(){
+        return size;
+    }
+    
+    @Override
+    public String toString(){
+        String st = "";
+        for (Token tk: tokens){
+            st += "["+tk.toString()+"]";
+        }
+        return st;
     }
     
 }

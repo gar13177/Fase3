@@ -19,17 +19,26 @@ public class Parser {
     private ScannerC scanner;
     private ArrayList<String> resWords = new ArrayList();
     private ExprBuild builder = new ExprBuild();
+    private int type = 0;//separar tipo de symbol. 1 = ident, 2 = string, 3 = char
     private String log = "";
+    private int newProduction = 0;//producciones nuevas para quitar kleene
     
     private String letter = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     private String digit = "123456890";
     private ArrayList<Character> whiteSpace;
-    private char[] any = new char[128];//todos los caracteres posibles
+    private char[] any = new char[93];//todos los caracteres posibles
     
     private HashMap<String, String> characters = new HashMap();
     private HashMap<String, String> keywords = new HashMap();
     private HashMap<String, String> tokens = new HashMap();
+
     private ArrayList<Character> whiteSpaces = new ArrayList();
+    
+    private HashMap<String, Productions> productions = new HashMap();//contiene todos los tokens
+    private Productions tempProductions = new Productions();
+    private Production tempProduction = new Production();
+    private Token tempToken;
+    
    
     
     
@@ -64,8 +73,8 @@ public class Parser {
         
         
         //conjunto any
-        for (int i = 0; i < any.length; i++){
-            any[i] = (char)i;
+        for (int i = 33; i < any.length+33; i++){
+            any[i-33] = (char)i;
         }
         
         //conjunto whitespace
@@ -174,12 +183,13 @@ public class Parser {
         }
         
         scanner.setCharPos(tempindex);
-        /*Iterator it = tokens.keySet().iterator();
+        
+        Iterator it = productions.keySet().iterator();
         while (it.hasNext()){
             String key = (String)it.next();
-            //System.out.println(key+": "+tokens.get(key));
+            System.out.println(key+": "+productions.get(key));
         }
-        System.out.println(characters);*/
+        //System.out.println(characters);
     }
     
     public boolean TokenDecl(){
@@ -381,6 +391,7 @@ public class Parser {
             if (!readSpecWord(7)){//si no dice keywords
                 builder.setString(""+(char)741+characters.get(scanner.getString(tempindex,tempindex2))+""+(char)568);
                 scanner.setCharPos(tempindex2);
+                type = 1;// es ident
                 return true;
             }  
         }
@@ -389,12 +400,14 @@ public class Parser {
         scanner.setPointer();
         if (isString()){
             builder.setString(scanner.getString(scanner.getPointer()+1,scanner.getCharPos()-1));
+            type = 2; // es string
             return true;
         }
         
         scanner.setCharPos(tempindex);
         if (isChar()){
             builder.setString(scanner.getString(scanner.getPointer()+1,scanner.getCharPos()-1));
+            type = 3; // es char
             return true;
         }
         
@@ -649,17 +662,26 @@ public class Parser {
         
         jumpWhite();
         if (scanner.Peek()!='=') return false;//no hay 
-        System.out.println("Production, si hay =");
+        //System.out.println("Production, si hay =");
         scanner.NextCh();
         
         jumpWhite();
         
+        tempProductions = new Productions();
+        
+        //Expression ya debe regresar las producciones
         if (!Expression()) return false; //no hay expression
         
         jumpWhite();
         if (scanner.Peek() != '.') return false;
-        scanner.NextCh();        
+        scanner.NextCh();
         
+        //
+        if (!productions.containsKey(ident))
+            productions.put(ident, tempProductions);//se agrega a producciones la cabeza y las producciones
+        else
+            productions.get(ident).addAll(tempProductions);//se agregan las nuevas producciones
+            
         return true;
     }
     
@@ -707,7 +729,12 @@ public class Parser {
     public boolean Expression(){
         jumpWhite();
         
+        tempProduction = new Production();
+        //term debe regresar una produccion
         if (!Term()) return false;
+        
+        tempProductions.addProduction(tempProduction);//agrego la produccion de Term
+        
         
         jumpWhite();
         int tempindex = scanner.getCharPos();
@@ -718,7 +745,9 @@ public class Parser {
             if (scanner.Peek() == '|'){
                 scanner.NextCh();
                 jumpWhite();
+                tempProduction = new Production();
                 if (Term()){
+                    tempProductions.addProduction(tempProduction);//agrego la produccion de Term
                     tempindex = scanner.getCharPos();
                 }else{
                     cond = false;
@@ -736,12 +765,17 @@ public class Parser {
     
     public boolean Term(){
         jumpWhite();
+        
+        //factor retorna en temptoken el token de lectura
         if (!Factor()) return false;
+        
+        tempProduction.addToken(tempToken);//agrego el token de factor
         
         jumpWhite();
         int tempindex = scanner.getCharPos();
         
         while (Factor()){
+            tempProduction.addToken(tempToken);//agrego los nuevos tokens
             jumpWhite();
             tempindex = scanner.getCharPos();
         }
@@ -754,11 +788,20 @@ public class Parser {
         jumpWhite();
         int tempindex = scanner.getCharPos();
         if (Symbol()){
+            
+            //construccion de token de tipo symbol
+            if (type == 1){
+                tempToken = new Token(scanner.getString(tempindex, scanner.getCharPos()),type);
+            }else{
+                tempToken = new Token(scanner.getString(tempindex+1, scanner.getCharPos()-1),type);
+            }
+            
             jumpWhite();
             tempindex = scanner.getCharPos();
             if (!Attributes()){
                 scanner.setCharPos(tempindex);
             }
+            
             return true;
         }
         
@@ -766,39 +809,114 @@ public class Parser {
         if (scanner.Peek() == '('){
             scanner.NextCh();
             jumpWhite();
+            
+            /**
+             * cada vez que ingresa a Expression debe utilizar tempProductions
+             */
+            Productions tempPs = new Productions(tempProductions);
+            Production tempP = new Production(tempProduction);
+            
+            tempProductions = new Productions();//se reinicializa
+            tempProduction = new Production();//se reinicializa
+            
             if (Expression()){
                 jumpWhite();
                 if (scanner.Peek() == ')'){
                     scanner.NextCh();
+                    
+                    tempToken = new Token("_init"+newProduction,5);//se agrega _initN como produccion
+                    
+                    productions.put("_init"+(newProduction++), tempProductions);
+                    
+                    tempProductions = tempPs;
+                    tempProduction = tempP;
+                    
+                    
                     return true;
                 }
             }
+            
+            tempProductions = tempPs;
+            tempProduction = tempP;  
         }
         
         scanner.setCharPos(tempindex);
         if (scanner.Peek() == '['){
             scanner.NextCh();
             jumpWhite();
+            
+            /**
+             * cada vez que ingresa a Expression debe utilizar tempProductions
+             */
+            Productions tempPs = new Productions (tempProductions);
+            Production tempP = new Production (tempProduction);
+            
+            tempProductions = new Productions();//se reinicializa
+            tempProduction = new Production();//se reinicializa
+            
             if (Expression()){
                 jumpWhite();
                 if (scanner.Peek() == ']'){
                     scanner.NextCh();
+                    
+                    tempToken = new Token("_init"+newProduction,5);//se agrega _initN como produccion
+                    
+                    Token tk = new Token("~",6);//se agrega token epsilon
+                    Production pd = new Production(tk);
+                    tempProductions.addProduction(pd);//se agrega una produccion de epsilon
+                    
+                    productions.put("_init"+(newProduction++), tempProductions);
+                    
+                    tempProductions = tempPs;
+                    tempProduction = tempP;
+                    
                     return true;
                 }
             }
+            
+            tempProductions = tempPs;
+            tempProduction = tempP;
         }
         
         scanner.setCharPos(tempindex);
         if (scanner.Peek() == '{'){
             scanner.NextCh();
             jumpWhite();
+            
+            /**
+             * cada vez que ingresa a Expression debe utilizar tempProductions
+             */
+            Productions tempPs = tempProductions;
+            Production tempP = tempProduction;
+            
+            tempProductions = new Productions();//se reinicializa
+            tempProduction = new Production();//se reinicializa            
+            
             if (Expression()){
                 jumpWhite();
                 if (scanner.Peek() == '}'){
                     scanner.NextCh();
+                    
+                    tempToken = new Token("_init"+newProduction,5);//se agrega _initN como produccion
+                    
+                    tempProductions.addAllEnd(tempToken);//se agrega a todas las producciones kleeneadas El mismo al final
+                    
+                    Token tk = new Token("~",6);//se agrega token epsilon
+                    Production pd = new Production(tk);
+                    tempProductions.addProduction(pd);//se agrega una produccion de epsilon
+                    
+                    productions.put("_init"+(newProduction++), tempProductions);
+                    
+                    tempProductions = tempPs;
+                    tempProduction = tempP;
+                    
+                    
+                    
                     return true;
                 }
             }
+            tempProductions = tempPs;
+            tempProduction = tempP;
         }
         
         scanner.setCharPos(tempindex);

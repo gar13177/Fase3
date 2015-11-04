@@ -49,6 +49,8 @@ public class ScannerC {
         
         length = charArray.size();
         
+        
+        
     }
     
     
@@ -109,7 +111,7 @@ public class ScannerC {
             column += 1;
         }
         charPos += 1;
-        System.out.println(temp);
+        //System.out.println(temp);
         return (int)temp;
     }
     
