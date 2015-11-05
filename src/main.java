@@ -33,6 +33,7 @@ public class main {
                 Operations operations = new Operations(parser.getProductions(),parser.getTokens());
                 
                 System.out.println("Parser bien definido: "+operations.isValid());
+                operations.FirstAll();
                 
                 CodeBuilder code = new CodeBuilder(parser.getTokens(),parser.getKeywords(),parser.getWhite());               
             }          

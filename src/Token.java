@@ -1,3 +1,6 @@
+
+import java.util.Objects;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -55,12 +58,21 @@ public class Token {
         type = tp;
     }
     
+    @Override
     public boolean equals (Object  o){
         boolean val;
         Token tk = (Token)o;
         val = tk.getType() == this.getType();//son del mismo tipo
         val = val && tk.getValue().equals(this.getValue());// el valor es identico
         return val;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 47 * hash + Objects.hashCode(this.value);
+        hash = 47 * hash + this.type;
+        return hash;
     }
     
     @Override

@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -27,6 +28,7 @@ public class Production {
     
     public Production(Token tk){
         tokens.add(tk);
+        size = tokens.size();
     }
     
     public ArrayList getProduction (){
@@ -50,8 +52,10 @@ public class Production {
     
     public void addTokenInit(Token tk){
         tokens.add(0,tk);//agregar elemento al inicio
+        size = tokens.size();
     }
     
+    @Override
     public boolean equals (Object o){
         
         Production pd = (Production) o;
@@ -67,9 +71,22 @@ public class Production {
         
         return val;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 97 * hash + Objects.hashCode(this.tokens);
+        hash = 97 * hash + this.size;
+        return hash;
+    }
     
     public int getSize(){
         return size;
+    }
+    
+    public void remove(int i){
+        tokens.remove(i);//quita token
+        size = tokens.size();
     }
     
     @Override

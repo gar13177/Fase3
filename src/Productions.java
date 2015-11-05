@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -53,6 +54,7 @@ public class Productions {
     
     }
     
+    @Override
     public boolean equals(Object o){
         Productions pd = (Productions) o;
         
@@ -66,6 +68,14 @@ public class Productions {
         }
         
         return val;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 23 * hash + Objects.hashCode(this.productions);
+        hash = 23 * hash + this.size;
+        return hash;
     }
     
     @Override
@@ -90,6 +100,7 @@ public class Productions {
     
     public void addAll(Productions pd){
         productions.addAll(pd.getProductions());
+        size = productions.size();
     }
     
 }

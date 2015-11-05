@@ -89,16 +89,21 @@ TOKENS
     '\"' EXCEPT KEYWORDS .
     
 PRODUCTIONS
+  S = A B C.
+  A = 'a' | C 'b' | '~' .
+  B = C | 'd' A | '~' .
+  C = 'e' | 'f' .
   
-  Prueba1 = charLit.
-  Prueba2 = floatLit.
-  Ident = ident.
-  Stat = [ "else"].
   
  
 
   
 END CompilationUnit.
+
+Prueba1 = charLit.
+  Prueba2 = floatLit.
+  Ident = ident.
+  Stat = [ "else"].
 
  VarDecl = intLit.
   
