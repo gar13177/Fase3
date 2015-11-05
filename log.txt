@@ -857,16 +857,20 @@ L: 89 C: 10 KeywordDecl lectura EXCEPT KEYWORDS
 L: 91 C: 1 TokenDecl lectura ident
 L: 91 C: 1 lectura PRODUCTIONS
 L: 91 C: 12 lectura Production
-L: 92 C: 3 Production lectura ident
 L: 93 C: 3 Production lectura ident
-L: 98 C: 1 Production lectura ident
+L: 94 C: 3 Production lectura ident
+L: 95 C: 3 Production lectura ident
+L: 96 C: 3 Production lectura ident
+L: 101 C: 1 Production lectura ident
 L: 92 C: 1 lectura WhiteSpaceDecl
 L: 90 C: 0 lectura ParserSpecification
 L: 92 C: 1 lectura PRODUCTIONS
 L: 92 C: 12 lectura Production
-L: 93 C: 3 Production lectura ident
-L: 93 C: 3 Production lectura ident
-L: 98 C: 1 Production lectura ident
-L: 99 C: 1 lectura END
-L: 99 C: 5 revision ident
-L: 99 C: 20 ident concuerda
+L: 94 C: 3 Production lectura ident
+L: 94 C: 3 Production lectura ident
+L: 95 C: 3 Production lectura ident
+L: 96 C: 3 Production lectura ident
+L: 101 C: 1 Production lectura ident
+L: 102 C: 1 lectura END
+L: 102 C: 5 revision ident
+L: 102 C: 20 ident concuerda

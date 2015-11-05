@@ -33,6 +33,11 @@ public class Token {
         this.type = tipo;
     }
     
+    public Token (Token tk){
+        this.value = tk.getValue();
+        this.type = tk.getType();
+    }
+    
     
     public String getValue(){
         return this.value;

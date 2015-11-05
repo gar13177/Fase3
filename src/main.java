@@ -30,6 +30,9 @@ public class main {
             boolean result = parser.Cocol();
             System.out.println("Fue aceptado: "+result);
             if (result){//compilado con exito
+                Operations operations = new Operations(parser.getProductions(),parser.getTokens());
+                
+                System.out.println("Parser bien definido: "+operations.isValid());
                 
                 CodeBuilder code = new CodeBuilder(parser.getTokens(),parser.getKeywords(),parser.getWhite());               
             }          

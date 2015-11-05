@@ -33,11 +33,19 @@ public class Production {
         return this.tokens;
     }
     
+    public Token get(int i){
+        return tokens.get(i);
+    }
+    
     public void addToken(Token tk){
         if (!tokens.contains(tk)){
             tokens.add(tk);
             size = tokens.size();
         }
+    }
+    
+    public void replace(int i, Token tk){
+        tokens.set(i, tk);
     }
     
     public void addTokenInit(Token tk){

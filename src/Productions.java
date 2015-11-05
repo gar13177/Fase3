@@ -36,6 +36,14 @@ public class Productions {
         //return !val;//si existe alguna, retornara false
     }
     
+    public Production get(int i){
+        return productions.get(i);
+    }
+    
+    public void replace(int i, Production pd){
+        productions.set(i, pd);
+    }
+    
     public int getSize(){
         return size;
     }

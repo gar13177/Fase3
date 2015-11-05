@@ -89,10 +89,20 @@ TOKENS
     '\"' EXCEPT KEYWORDS .
     
 PRODUCTIONS
-  ProcDecl = Ident '(' ')' '{' {VarDecl | Stat} '}'.
-  Prueba = {Prueba (Prueba1 | Prueba2)} {Prueba1 | Prueba2} | Prueba.
   
-
+  Prueba1 = charLit.
+  Prueba2 = floatLit.
+  Ident = ident.
+  Stat = [ "else"].
+  
+ 
 
   
 END CompilationUnit.
+
+ VarDecl = intLit.
+  
+ProcDecl = Ident '(' ')' '{' {VarDecl | Stat} '}'.
+  Prueba = {Prueba (Prueba1 | Prueba2)} {Prueba1 | Prueba2} | Prueba.
+
+

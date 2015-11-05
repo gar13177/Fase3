@@ -35,6 +35,7 @@ public class Parser {
     private ArrayList<Character> whiteSpaces = new ArrayList();
     
     private HashMap<String, Productions> productions = new HashMap();//contiene todos los tokens
+    private HashMap<String, Productions> newProductions = new HashMap();
     private Productions tempProductions = new Productions();
     private Production tempProduction = new Production();
     private Token tempToken;
@@ -127,7 +128,8 @@ public class Parser {
         log += "L: "+scanner.getLine()+" C: "+scanner.getColumn() +" "+ "ident concuerda\n";
         
         jumpWhite();//saltamos en blanco
-        new Printer(log,"log.txt");
+        new Printer(log,"log.txt");        
+        
         return scanner.NextCh() == '.';//si no es igual fallo
     }
     
@@ -184,11 +186,7 @@ public class Parser {
         
         scanner.setCharPos(tempindex);
         
-        Iterator it = productions.keySet().iterator();
-        while (it.hasNext()){
-            String key = (String)it.next();
-            System.out.println(key+": "+productions.get(key));
-        }
+        
         //System.out.println(characters);
     }
     
@@ -199,12 +197,12 @@ public class Parser {
         log += "L: "+scanner.getLine()+" C: "+scanner.getColumn() +" "+ "TokenDecl lectura ident\n";
         if (!isIdent()) return false;
         String ident = scanner.getString(scanner.getPointer(), scanner.getCharPos());
-        System.out.println(ident);
+        //System.out.println(ident);
         if (ident.equals("PRODUCTIONS")){
             int tempindex = scanner.getCharPos();//guardar posicion
             scanner.setCharPos(scanner.getPointer());//retornamos hasta previo de Productions
             if (ParserSpecification()){// si se logra leer parserspecification, no es token
-                System.out.println("esto ocurrio");
+                //System.out.println("esto ocurrio");
                 return false;
             }
             scanner.setCharPos(tempindex);
@@ -212,7 +210,7 @@ public class Parser {
             int tempindex = scanner.getCharPos();
             scanner.setCharPos(scanner.getPointer());
             if (WhiteSpaceDecl()){//si es whitespace
-                System.out.println("white");
+                //System.out.println("white");
                 return false;
             }
             scanner.setCharPos(tempindex);            
@@ -623,13 +621,18 @@ public class Parser {
     
     public boolean ParserSpecification(){
         int tempindex;
-        System.out.println("ingreso a parser");
+        //System.out.println("ingreso a parser");
         jumpWhite();//saltamos en blanco
         tempindex = scanner.getCharPos();//guardamos posicion
         log += "L: "+scanner.getLine()+" C: "+scanner.getColumn() +" "+ "lectura PRODUCTIONS\n";
         if (readSpecWord(9)){//si dice PRODUCTIONS
             tempindex = scanner.getCharPos();
             log += "L: "+scanner.getLine()+" C: "+scanner.getColumn() +" "+ "lectura Production\n";
+            
+            //reinicializo los conjuntos
+            productions = new HashMap();
+            newProduction = 0;
+            
             while (Production()){
                 tempindex = scanner.getCharPos();
             }
@@ -637,6 +640,8 @@ public class Parser {
             return false;
         }
         scanner.setCharPos(tempindex);
+     
+        
         return true;
     }
     
@@ -1055,6 +1060,10 @@ public class Parser {
     
     public ArrayList getWhite(){
         return whiteSpaces;
+    }
+    
+    public HashMap getProductions(){
+        return productions;
     }
     
 }
