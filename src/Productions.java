@@ -17,6 +17,8 @@ public class Productions {
     private ArrayList<Production> productions = new ArrayList();
     private int size = 0;
     
+    private boolean head = false;//si es la cabeza de todas las producciones
+    
     public Productions(){
         
     }
@@ -24,6 +26,15 @@ public class Productions {
     public Productions(Productions pd){
         productions = pd.getProductions();
         size = productions.size();
+        head = pd.getHead();
+    }
+    
+    public void setHead(boolean hd){
+        this.head = hd;
+    }
+    
+    public boolean getHead(){
+        return this.head;
     }
     
     public void addProduction(Production pd){
@@ -81,6 +92,10 @@ public class Productions {
     @Override
     public String toString(){
         String st = "";
+        
+        if (head)//si es cabeza
+            st += "Es Primera Produccion\n";
+        
         for (Production pd:productions){
             st += pd.toString()+"\n";
         }
@@ -101,6 +116,14 @@ public class Productions {
     public void addAll(Productions pd){
         productions.addAll(pd.getProductions());
         size = productions.size();
+    }
+    
+    public boolean contains(Production pd){
+        for(Production pdd:productions){
+            if (pdd.equals(pd)) return true;
+        }
+        
+        return false;
     }
     
 }

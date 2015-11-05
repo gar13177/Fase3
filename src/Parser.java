@@ -22,6 +22,7 @@ public class Parser {
     private int type = 0;//separar tipo de symbol. 1 = ident, 2 = string, 3 = char
     private String log = "";
     private int newProduction = 0;//producciones nuevas para quitar kleene
+    private int firstProduction = 0;//identificar primera produccion
     
     private String letter = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     private String digit = "123456890";
@@ -632,6 +633,7 @@ public class Parser {
             //reinicializo los conjuntos
             productions = new HashMap();
             newProduction = 0;
+            firstProduction = 0;
             
             while (Production()){
                 tempindex = scanner.getCharPos();
@@ -681,11 +683,16 @@ public class Parser {
         if (scanner.Peek() != '.') return false;
         scanner.NextCh();
         
-        //
+        
+        tempProductions.setHead(firstProduction == 0);//establezco la cabeza
+        firstProduction++;//establezco la cabeza
+        
         if (!productions.containsKey(ident))
             productions.put(ident, tempProductions);//se agrega a producciones la cabeza y las producciones
         else
             productions.get(ident).addAll(tempProductions);//se agregan las nuevas producciones
+        
+        
             
         return true;
     }

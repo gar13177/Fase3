@@ -81,6 +81,7 @@ public class Production {
     }
     
     public int getSize(){
+        size = tokens.size();
         return size;
     }
     
@@ -91,11 +92,18 @@ public class Production {
     
     @Override
     public String toString(){
-        String st = "";
+        String st = "";        
         for (Token tk: tokens){
             st += "["+tk.toString()+"]";
         }
         return st;
+    }
+    
+    public boolean contains(Token tk){
+        for (Token tkk:tokens){
+            if (tkk.equals(tk)) return true;
+        }
+        return false;
     }
     
 }

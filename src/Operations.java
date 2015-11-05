@@ -18,6 +18,8 @@ public class Operations {
     
     private HashMap<String,Productions> productions;
     private HashMap<String,String> tokens;
+    private HashMap<String,LinkedHashSet<Token>> first;
+    private HashMap<String,LinkedHashSet<Token>> follow;
     
     
     public Operations(){
@@ -103,20 +105,172 @@ public class Operations {
     }
     
     public void FirstAll(){
+        first = new HashMap();
+        
         Iterator it = productions.keySet().iterator();
         while (it.hasNext()){
             String key = (String)it.next();
             Productions pd = productions.get(key);//obtenemos las producciones
-            System.out.println("Cabeza: "+key);
+            //System.out.println("Cabeza: "+key);
             ArrayList<String> temphd = new ArrayList();
             LinkedHashSet<Token> temptk = new LinkedHashSet();
             temphd.add(key);
             for (int i = 0; i < pd.getSize(); i++){//para cada produccion
                 temptk.addAll(First(pd.get(i),temphd,new LinkedHashSet<Token>()));
             }
-            System.out.println(temptk);
+            //System.out.println(temptk);
+            first.put(key, temptk);
+        }
+        
+        System.out.println("First-----------------");
+        it = first.keySet().iterator();
+        while (it.hasNext()){
+            String key = (String)it.next();
+            System.out.println("Cabeza: "+key+" Cuerpo: "+first.get(key));
         }
     }
+    
+    public LinkedHashSet<Token> Follow(int index, Production pd, ArrayList<String> hd, LinkedHashSet<Token> tks){
+        
+        if(follow.containsKey(pd.get(index).getValue())){//si el follow ya se calculo
+            LinkedHashSet<Token> nt = follow.get(pd.get(index).getValue());
+            tks.addAll(nt);
+            return tks;
+        }
+        if (!hd.contains(pd.get(index).getValue())){//si no se ha explorado esa cabeza
+            if (pd.get(index).getType()==5){//se realiza  solo si es una produccion
+                if (pd.getSize()-1<index){//si la produccion a followear no es la ultima
+                    if (pd.get(index+1).getType() == 5){//si el que sigue es produccion
+                        LinkedHashSet temptks = first.get(pd.get(index+1).getValue());//se toma first del siguiente
+                        Token temptk = new Token("~",6);//token vacio
+                        if (temptks.contains(temptk)){//si contiene el vacio...
+                            temptks.remove(temptk);//quitamos epsilon
+                            hd.add(pd.get(index).getValue());//agrego la cabeza ya visitada
+
+                            Iterator it = productions.keySet().iterator();
+                            String keyy = "";
+                            while (it.hasNext()){
+                                String key = (String) it.next();
+                                if (productions.get(key).contains(pd)){//si la produccion esta contenida
+                                    keyy = key;//encontramos la cabeza de produccion que contiene dicha produccion
+                                }
+                            }
+                            
+                            //computamos siguiente follow
+
+                            Token tkk = new Token(keyy,5);//creamos un token de produccion tipo keyy
+                            LinkedHashSet<Token> temptksn = new LinkedHashSet();//nuevo conjunto follow
+                            it = productions.keySet().iterator();
+                            while (it.hasNext()){
+                                String key = (String) it.next();
+                                for (int i = 0; i < productions.get(key).getSize(); i++){//para cada produccion
+                                    
+                                    for ( int j = 0; j<productions.get(key).get(i).getSize(); j++){//para cada token
+                                        if (tkk.equals(productions.get(key).get(i).get(j))){//si el token es igual
+                                            temptksn.addAll(Follow(j,productions.get(key).get(i),hd, new LinkedHashSet<Token>()));//calculamos follow de ese token
+                                        }
+                                    }
+                                }
+                            }//termina calculo de follow
+                            
+                            follow.put(keyy, temptksn);//nuevo follow agregado
+                            tks.addAll(temptksn);//agregamos follow del siguiente
+
+
+                        }
+                        tks.addAll(temptks);//agregamos los del conjunto first
+                    }else if(pd.get(index+1).getType() != 6){
+                        tks.add(pd.get(index+1));
+                    }
+                    /**
+                     * falta corregir si se agrega ejemplo: T -> A B '~', que pasa con epsilon?
+                     */
+
+                }else{//si la expresion es la ultima...
+                    hd.add(pd.get(index).getValue());//agrego la cabeza
+                    Iterator it = productions.keySet().iterator();
+                    String keyy = "";
+                    while (it.hasNext()){
+                        String key = (String) it.next();
+                        if (productions.get(key).contains(pd)){//si la produccion esta contenida
+                            keyy = key;
+                        }
+                    }
+                    
+                    //computamos siguiente follow
+
+                    Token tkk = new Token(keyy,5);//creamos un token de produccion tipo keyy
+                    LinkedHashSet<Token> temptksn = new LinkedHashSet();//nuevo conjunto follow
+                    it = productions.keySet().iterator();
+                    while (it.hasNext()){
+                        String key = (String) it.next();
+                        for (int i = 0; i < productions.get(key).getSize(); i++){//para cada produccion
+                            //System.out.println("tamano:"+productions.get(key).get(i).getSize());
+                            //System.out.println("produccion:"+productions.get(key).get(i));
+
+                            for ( int j = 0; j<productions.get(key).get(i).getSize(); j++){//para cada token
+                                if (tkk.equals(productions.get(key).get(i).get(j))){//si el token es igual
+                                    temptksn.addAll(Follow(j,productions.get(key).get(i),hd, new LinkedHashSet<Token>()));//calculamos follow de ese token
+                                }
+                            }
+                        }
+                    }//termina calculo de follow
+                    
+                    
+                   
+                    follow.put(keyy, temptksn);//nuevo follow agregado
+                    tks.addAll(temptksn);
+                }
+
+            }
+        }
+        
+        return tks;        
+    }
+    
+    public void FollowAll(){
+        follow = new HashMap();
+        
+        Token tk = new Token("$",3);//token que se agrega al final de primera produccion
+        
+        Iterator it = productions.keySet().iterator();
+        while (it.hasNext()){
+            String key = (String) it.next();
+            if (productions.get(key).getHead()){//si es la cabeza
+                //System.out.println("si hay cabeza");
+                LinkedHashSet<Token> temp = new LinkedHashSet();
+                temp.add(tk);
+                follow.put(key, temp);//agregamos el dolar a follow del primero
+            }
+        }
+        System.out.println("Follow------------");
+        System.out.println("Paso base:"+follow);
+        
+        it = productions.keySet().iterator();
+        while (it.hasNext()){
+            String key = (String)it.next();
+            Productions pd = productions.get(key);//obtenemos las producciones
+            for (int i = 0; i < pd.getSize(); i++){//para cada produccion
+                for (int j = 0; j<pd.get(i).getSize(); j++){//para cada token
+                    if (pd.get(i).get(j).getType()==5){//si es produccion
+                        follow.put(key, Follow(j,pd.get(i),new ArrayList<String>(),new LinkedHashSet<Token>()));
+                    }
+                }
+            }
+        }
+        
+        
+        it = follow.keySet().iterator();
+        while (it.hasNext()){
+            String key = (String)it.next();
+            LinkedHashSet fl = follow.get(key);//obtenemos las producciones
+            System.out.println("Cabeza: "+key);
+            System.out.println(fl);
+        }
+        
+        
+    }
+    
          
     public boolean isValid(){
         
@@ -155,6 +309,7 @@ public class Operations {
                 }
                 //System.out.println("Producciones: "+tempproduction);
                 tempproductions.addProduction(tempproduction);
+                tempproductions.setHead(pd.getHead());
             
             }
             
