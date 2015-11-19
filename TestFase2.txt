@@ -88,13 +88,12 @@ TOKENS
          } 
     '\"' EXCEPT KEYWORDS .
     
+    id =stringChar.
+    
 PRODUCTIONS
-  S = A B C.
-  A = 'a' | C 'b' | '~' .
-  B = C | 'd' A | '~' .
-  C = 'e' | 'f' .
-  
-  
+  ProcDecl = Ident '(' ')' '{' {VarDecl | Stat} '}' '"'.
+
+
  
 
   
@@ -107,7 +106,7 @@ Prueba1 = charLit.
 
  VarDecl = intLit.
   
-ProcDecl = Ident '(' ')' '{' {VarDecl | Stat} '}'.
+
   Prueba = {Prueba (Prueba1 | Prueba2)} {Prueba1 | Prueba2} | Prueba.
 
 

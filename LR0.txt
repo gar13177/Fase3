@@ -1,0 +1,48 @@
+digraph finite_state_machine {
+rankdir=UD;
+node [shape = box, style = rounded];
+0 1 2 3 4 5 6 7 8 9 10 11 12 13 ;
+0 -> 1 [ label = "ProcDecl" ];
+0 -> 2 [ label = "Ident" ];
+2 -> 3 [ label = "'('" ];
+3 -> 4 [ label = "')'" ];
+4 -> 5 [ label = "'{'" ];
+5 -> 6 [ label = "_init0" ];
+5 -> 7 [ label = "VarDecl" ];
+5 -> 8 [ label = "Stat" ];
+5 -> 9 [ label = "~" ];
+6 -> 10 [ label = "'}'" ];
+7 -> 11 [ label = "_init0" ];
+7 -> 7 [ label = "VarDecl" ];
+7 -> 8 [ label = "Stat" ];
+7 -> 9 [ label = "~" ];
+8 -> 12 [ label = "_init0" ];
+8 -> 7 [ label = "VarDecl" ];
+8 -> 8 [ label = "Stat" ];
+8 -> 9 [ label = "~" ];
+10 -> 13 [ label = "''''" ];
+0[label = "ProcDeclProcDecl00 ->  ° ProcDecl $
+ProcDecl ->  ° Ident '(' ')' '{' _init0 '}' ''''
+"]1[label = "ProcDeclProcDecl00 ->  ProcDecl ° $
+"]2[label = "ProcDecl ->  Ident ° '(' ')' '{' _init0 '}' ''''
+"]3[label = "ProcDecl ->  Ident '(' ° ')' '{' _init0 '}' ''''
+"]4[label = "ProcDecl ->  Ident '(' ')' ° '{' _init0 '}' ''''
+"]5[label = "ProcDecl ->  Ident '(' ')' '{' ° _init0 '}' ''''
+_init0 ->  ° VarDecl _init0
+_init0 ->  ° Stat _init0
+_init0 ->  ° ~
+"]6[label = "ProcDecl ->  Ident '(' ')' '{' _init0 ° '}' ''''
+"]7[label = "_init0 ->  VarDecl ° _init0
+_init0 ->  ° VarDecl _init0
+_init0 ->  ° Stat _init0
+_init0 ->  ° ~
+"]8[label = "_init0 ->  Stat ° _init0
+_init0 ->  ° VarDecl _init0
+_init0 ->  ° Stat _init0
+_init0 ->  ° ~
+"]9[label = "_init0 ->  ~ °
+"]10[label = "ProcDecl ->  Ident '(' ')' '{' _init0 '}' ° ''''
+"]11[label = "_init0 ->  VarDecl _init0 °
+"]12[label = "_init0 ->  Stat _init0 °
+"]13[label = "ProcDecl ->  Ident '(' ')' '{' _init0 '}' '''' °
+"]}

@@ -854,23 +854,26 @@ L: 90 C: 5 TokenFactor lectura symbolo
 L: 89 C: 10 TokenTerm lectura {TokenFactor}
 L: 89 C: 10 TokenFactor lectura symbolo
 L: 89 C: 10 KeywordDecl lectura EXCEPT KEYWORDS
-L: 91 C: 1 TokenDecl lectura ident
-L: 91 C: 1 lectura PRODUCTIONS
-L: 91 C: 12 lectura Production
-L: 92 C: 3 Production lectura ident
-L: 93 C: 3 Production lectura ident
+L: 91 C: 5 TokenDecl lectura ident
+L: 91 C: 7 TokenDecl iden encontrado
+L: 91 C: 9 TokenDecl lectura TokenExpr
+L: 91 C: 9 TokenExpr lectura TokenTerm
+L: 91 C: 9 TokenTerm lectura TokenFactor
+L: 91 C: 9 TokenFactor lectura symbolo
+L: 91 C: 19 TokenTerm lectura {TokenFactor}
+L: 91 C: 19 TokenFactor lectura symbolo
+L: 91 C: 19 KeywordDecl lectura EXCEPT KEYWORDS
+L: 93 C: 1 TokenDecl lectura ident
+L: 93 C: 1 lectura PRODUCTIONS
+L: 93 C: 12 lectura Production
 L: 94 C: 3 Production lectura ident
+L: 100 C: 1 Production lectura ident
+L: 94 C: 1 lectura WhiteSpaceDecl
+L: 92 C: 0 lectura ParserSpecification
+L: 94 C: 1 lectura PRODUCTIONS
+L: 94 C: 12 lectura Production
 L: 95 C: 3 Production lectura ident
-L: 101 C: 1 Production lectura ident
-L: 92 C: 1 lectura WhiteSpaceDecl
-L: 90 C: 0 lectura ParserSpecification
-L: 92 C: 1 lectura PRODUCTIONS
-L: 92 C: 12 lectura Production
-L: 93 C: 3 Production lectura ident
-L: 93 C: 3 Production lectura ident
-L: 94 C: 3 Production lectura ident
-L: 95 C: 3 Production lectura ident
-L: 101 C: 1 Production lectura ident
-L: 102 C: 1 lectura END
-L: 102 C: 5 revision ident
-L: 102 C: 20 ident concuerda
+L: 100 C: 1 Production lectura ident
+L: 101 C: 1 lectura END
+L: 101 C: 5 revision ident
+L: 101 C: 20 ident concuerda

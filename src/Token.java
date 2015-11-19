@@ -23,6 +23,7 @@ public class Token {
      * 4 = es token declarado (Token de los del compilador)
      * 5 = es produccion
      * 6 = es epsilon
+     * 0 = es token final
      */
     
     
@@ -78,7 +79,24 @@ public class Token {
     @Override
     public String toString(){
         String st = "";
-        st += "Value: "+value+", Type: "+type;        
+        st += "<Value: "+value+", Type: "+type+">";        
+        return st;
+    }
+    
+    /**
+     * Metodo que retorna una forma mas amigable de ver el token
+     * @return 
+     */
+    public String geString(){
+        String val = value;
+        val = val.replace('"'+"", "''");
+        String st = "";
+        if (type == 2)
+            st += "''"+val+"''";
+        else if (type == 3)
+            st += "'"+val+"'";
+        else
+            st+= val;
         return st;
     }
     

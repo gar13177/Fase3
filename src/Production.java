@@ -40,10 +40,10 @@ public class Production {
     }
     
     public void addToken(Token tk){
-        if (!tokens.contains(tk)){
+        //if (!tokens.contains(tk)){
             tokens.add(tk);
             size = tokens.size();
-        }
+        //}
     }
     
     public void replace(int i, Token tk){
