@@ -142,12 +142,12 @@ public class Item {
         st += head + " -> ";
         for (int i = 0; i < production.getSize(); i++) {
             if (index == i) {
-                st += " °";
+                st += " ●";
             }
-            st += " "+production.get(i).geString();
+            st += " "+production.get(i).getString();
         }
         if (index == production.getSize()) {
-            st += " °";
+            st += " ●";
         }
 
         return st;

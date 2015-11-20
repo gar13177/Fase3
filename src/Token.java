@@ -87,7 +87,7 @@ public class Token {
      * Metodo que retorna una forma mas amigable de ver el token
      * @return 
      */
-    public String geString(){
+    public String getString(){
         String val = value;
         val = val.replace('"'+"", "''");
         String st = "";

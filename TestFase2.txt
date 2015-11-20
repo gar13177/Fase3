@@ -91,7 +91,9 @@ TOKENS
     id =stringChar.
     
 PRODUCTIONS
-  ProcDecl = Ident '(' ')' '{' {VarDecl | Stat} '}' '"'.
+  E = E '+' T | T .
+  T = T '*' F | F.
+  F = '(' E ')' | 'id'.
 
 
  

@@ -34,8 +34,9 @@ public class main {
                 
                 System.out.println("Parser bien definido: "+operations.isValid());
                 //operations.FirstTry();
-                operations.FollowAll();
+                //operations.FollowAll();
                 operations.BuildAutomata();
+                operations.BuildReduce();
                 
                 CodeBuilder code = new CodeBuilder(parser.getTokens(),parser.getKeywords(),parser.getWhite());               
             }          

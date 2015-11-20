@@ -867,13 +867,17 @@ L: 93 C: 1 TokenDecl lectura ident
 L: 93 C: 1 lectura PRODUCTIONS
 L: 93 C: 12 lectura Production
 L: 94 C: 3 Production lectura ident
-L: 100 C: 1 Production lectura ident
+L: 95 C: 3 Production lectura ident
+L: 96 C: 3 Production lectura ident
+L: 102 C: 1 Production lectura ident
 L: 94 C: 1 lectura WhiteSpaceDecl
 L: 92 C: 0 lectura ParserSpecification
 L: 94 C: 1 lectura PRODUCTIONS
 L: 94 C: 12 lectura Production
 L: 95 C: 3 Production lectura ident
-L: 100 C: 1 Production lectura ident
-L: 101 C: 1 lectura END
-L: 101 C: 5 revision ident
-L: 101 C: 20 ident concuerda
+L: 95 C: 3 Production lectura ident
+L: 96 C: 3 Production lectura ident
+L: 102 C: 1 Production lectura ident
+L: 103 C: 1 lectura END
+L: 103 C: 5 revision ident
+L: 103 C: 20 ident concuerda

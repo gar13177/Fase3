@@ -21,6 +21,10 @@ public class Operations {
     private HashMap<String,LinkedHashSet<Token>> follow;
     private AutoLR0 automata;
     
+    private ArrayList<Relation> reduce;
+    
+    
+    
     
     public Operations(){
         
@@ -39,6 +43,7 @@ public class Operations {
      * 
      * @param pd
      * @param hd 
+     * @return  
      */
     public LinkedHashSet<Token> First(Production pd){
         LinkedHashSet<Token> first = new LinkedHashSet();
@@ -177,7 +182,7 @@ public class Operations {
                 //System.out.println("si hay cabeza");
                 LinkedHashSet<Token> temp = new LinkedHashSet();
                 temp.add(tk);
-                follow.put(key, temp);//agregamos el dolar a follow del primero
+                follow.put(key+key+"00", temp);//agregamos el dolar a follow del primero
             }
         }
         //System.out.println("Follow------------");
@@ -358,7 +363,39 @@ public class Operations {
         new Printer(automata.toStringDraw(),"LR0");
         new Draw("LR0");
        
-        System.out.println(automata);
+        //System.out.println(automata);
+    }
+    
+    /**
+     * Solamente se puede ejecutar luego de ejecutar BuildAutomata
+     * Utiliza Follow, por lo que lo computa despues de agregar SS00 (nuevo estado inicial)
+     * SS00 -> S $.
+     */
+    public void BuildReduce(){
+        FollowAll();//computamos follow luego de agregar la nueva cabeza
+        reduce = new ArrayList();
+        
+        for (int i = 0; i <automata.getSizeStates(); i++){//para cada estado
+            Items state = automata.getState(i);//tomamos el estado actual
+            for (int j = 0; j < state.getSize(); j++){//para cada produccion
+                Item it = state.get(j);//produccion actual
+                if (it.getIndex() == it.getProduction().getSize()){//si esta apuntando al final
+                    LinkedHashSet<Token> follown = follow.get(it.getHead());//tomamos el follow de la cabeza
+                    for (Token tk : follown){//para cada follow
+                        Relation rl = new Relation(i,tk,it.getHead(),it.getProduction());//construimos una nueva relacion
+                        if (!reduce.contains(rl)){//si reduce no contiene dicha relacion
+                            reduce.add(rl);                            
+                        }
+                    }
+                }
+            }
+            
+        }
+        
+        /*System.out.println("Tamano "+reduce.size());
+        for (Relation rt: reduce){
+            System.out.println(rt);
+        }*/
     }
     
     public Items Closure(Items its){

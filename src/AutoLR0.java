@@ -82,11 +82,11 @@ public class AutoLR0 {
         
         
         for (int i = 0; i < transitions.size(); i++){//para cada transición
-            txt += transitions.get(i).getState0()+" -> "+transitions.get(i).getState1()+" [ label = \""+transitions.get(i).getTransition().geString()+"\" ];\n"; 
+            txt += transitions.get(i).getState0()+" -> "+transitions.get(i).getState1()+" [ label = \""+transitions.get(i).getTransition().getString()+"\" ];\n"; 
         }
         
         for (int i = 0; i < states.size(); i++){//para cada estado
-            txt += i+"[label = \""+states.get(i).getString()+"\"]";
+            txt += i+"[label = \"I"+i+"\n"+states.get(i).getString()+"\"]";
         }
         
         txt += "}";
