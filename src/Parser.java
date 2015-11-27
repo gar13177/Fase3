@@ -19,17 +19,28 @@ public class Parser {
     private ScannerC scanner;
     private ArrayList<String> resWords = new ArrayList();
     private ExprBuild builder = new ExprBuild();
+    private int type = 0;//separar tipo de symbol. 1 = ident, 2 = string, 3 = char
     private String log = "";
+    private int newProduction = 0;//producciones nuevas para quitar kleene
+    private int firstProduction = 0;//identificar primera produccion
     
     private String letter = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     private String digit = "123456890";
-    private ArrayList<Character> whiteSpace;
-    private char[] any = new char[128];//todos los caracteres posibles
+    private ArrayList<String> whiteSpace;
+    private char[] any = new char[93];//todos los caracteres posibles
     
     private HashMap<String, String> characters = new HashMap();
     private HashMap<String, String> keywords = new HashMap();
     private HashMap<String, String> tokens = new HashMap();
-    private ArrayList<Character> whiteSpaces = new ArrayList();
+
+    private ArrayList<String> whiteSpaces = new ArrayList();
+    
+    private HashMap<String, Productions> productions = new HashMap();//contiene todos los tokens
+    private HashMap<String, Productions> newProductions = new HashMap();
+    private Productions tempProductions = new Productions();
+    private Production tempProduction = new Production();
+    private Token tempToken;
+    
    
     
     
@@ -60,18 +71,19 @@ public class Parser {
         resWords.add("EXCEPT");//6
         resWords.add("KEYWORDS");//7
         resWords.add("IGNORE");//8
+        resWords.add("PRODUCTIONS");//9
         
         
         //conjunto any
-        for (int i = 0; i < any.length; i++){
-            any[i] = (char)i;
+        for (int i = 33; i < any.length+33; i++){
+            any[i-33] = (char)i;
         }
         
         //conjunto whitespace
         whiteSpace = new ArrayList();
-        whiteSpace.add((char)32);
-        whiteSpace.add((char)9);
-        whiteSpace.add((char)10);
+        whiteSpace.add(""+(char)32);
+        whiteSpace.add(""+(char)9);
+        whiteSpace.add(""+(char)10);
         
         characters.put("letter", letter);
         characters.put("digit", digit);
@@ -83,12 +95,18 @@ public class Parser {
     public boolean Cocol(){
         jumpWhite();//saltamos en blanco
         log += "L: "+scanner.getLine()+" C: "+scanner.getColumn() +" "+ "lectura COMPILER\n";
-        if (!readSpecWord(0)) return false;
+        if (!readSpecWord(0)){
+            new Printer(log,"log.txt"); 
+            return false;
+        }
         
         jumpWhite();//saltamos en blanco
         scanner.setPointer();//fijamos punto de inicio
         log += "L: "+scanner.getLine()+" C: "+scanner.getColumn() +" "+ "lectura ident\n";
-        if (!isIdent()) return false;
+        if (!isIdent()){
+            new Printer(log,"log.txt"); 
+            return false;
+        }
         String ident = scanner.getString(scanner.getPointer(), scanner.getCharPos());//se obtiene el ident
         
         log += "L: "+scanner.getLine()+" C: "+scanner.getColumn() +" "+ "ident: "+ident+"\n";
@@ -96,22 +114,42 @@ public class Parser {
         log += "L: "+scanner.getLine()+" C: "+scanner.getColumn() +" "+ "lectura ScannerSpecification\n";
         ScannerSpecification();//ejecutamos scannerspecification
         
+        checkWhite();//convertimos los / en caracteres de escape
+        
+        log += "L: "+scanner.getLine()+" C: "+scanner.getColumn() +" "+ "lectura ParserSpecification\n";
+        if (!ParserSpecification()){//ejecutamos parserSpecification
+            log += "L: "+scanner.getLine()+" C: "+scanner.getColumn() +" "+ "error no ParserSpecification\n";
+            new Printer(log,"log.txt"); 
+            return false;
+        }
+        
         jumpWhite();//saltamos en blanco
         log += "L: "+scanner.getLine()+" C: "+scanner.getColumn() +" "+ "lectura END\n";
-        if (!readSpecWord(1)) return false;//si no hay END, fallo
+        if (!readSpecWord(1)){
+            new Printer(log,"log.txt"); 
+            return false;
+        }//si no hay END, fallo
         
         
         
         jumpWhite();//saltamos en blanco
         scanner.setPointer();//fijamos punto de inicio
         log += "L: "+scanner.getLine()+" C: "+scanner.getColumn() +" "+ "revision ident\n";
-        if (!isIdent()) return false;//si no es ident fallo
+        if (!isIdent()){
+            new Printer(log,"log.txt"); 
+            return false;
+        }//si no es ident fallo
         
-        if (!ident.equals(scanner.getString(scanner.getPointer(), scanner.getCharPos()))) return false;//comparamos ident
+        if (!ident.equals(scanner.getString(scanner.getPointer(), scanner.getCharPos()))){
+            new Printer(log,"log.txt"); 
+            return false;
+        }//comparamos ident
         log += "L: "+scanner.getLine()+" C: "+scanner.getColumn() +" "+ "ident concuerda\n";
         
         jumpWhite();//saltamos en blanco
-        new Printer(log,"log.txt");
+        new Printer(log,"log.txt");        
+        
+        
         return scanner.NextCh() == '.';//si no es igual fallo
     }
     
@@ -167,12 +205,9 @@ public class Parser {
         }
         
         scanner.setCharPos(tempindex);
-        /*Iterator it = tokens.keySet().iterator();
-        while (it.hasNext()){
-            String key = (String)it.next();
-            //System.out.println(key+": "+tokens.get(key));
-        }
-        System.out.println(characters);*/
+        
+        
+        //System.out.println(characters);
     }
     
     public boolean TokenDecl(){
@@ -182,6 +217,26 @@ public class Parser {
         log += "L: "+scanner.getLine()+" C: "+scanner.getColumn() +" "+ "TokenDecl lectura ident\n";
         if (!isIdent()) return false;
         String ident = scanner.getString(scanner.getPointer(), scanner.getCharPos());
+        //System.out.println(ident);
+        if (ident.equals("PRODUCTIONS")){
+            int tempindex = scanner.getCharPos();//guardar posicion
+            scanner.setCharPos(scanner.getPointer());//retornamos hasta previo de Productions
+            if (ParserSpecification()){// si se logra leer parserspecification, no es token
+                //System.out.println("esto ocurrio");
+                return false;
+            }
+            scanner.setCharPos(tempindex);
+        }else if (ident.equals("IGNORE")){
+            int tempindex = scanner.getCharPos();
+            scanner.setCharPos(scanner.getPointer());
+            if (WhiteSpaceDecl()){//si es whitespace
+                //System.out.println("white");
+                whiteSpaces = new ArrayList();
+                return false;
+            }
+            scanner.setCharPos(tempindex);            
+        }
+        
         log += "L: "+scanner.getLine()+" C: "+scanner.getColumn() +" "+ "TokenDecl iden encontrado\n";
         
         jumpWhite();
@@ -236,6 +291,7 @@ public class Parser {
         
         boolean cond = true;
         while (cond){
+            jumpWhite();
             if (scanner.Peek() == '|'){
                 scanner.NextCh();
                 jumpWhite();
@@ -243,6 +299,7 @@ public class Parser {
                 log += "L: "+scanner.getLine()+" C: "+scanner.getColumn() +" "+ "TokenExpr lectura | Token Term\n";
                 if (TokenTerm()){
                     temp += ""+""+(char)248+builder.getString();
+                    
                     tempindex = scanner.getCharPos();
                 }else{
                     cond = false;
@@ -353,6 +410,7 @@ public class Parser {
             if (!readSpecWord(7)){//si no dice keywords
                 builder.setString(""+(char)741+characters.get(scanner.getString(tempindex,tempindex2))+""+(char)568);
                 scanner.setCharPos(tempindex2);
+                type = 1;// es ident
                 return true;
             }  
         }
@@ -361,12 +419,14 @@ public class Parser {
         scanner.setPointer();
         if (isString()){
             builder.setString(scanner.getString(scanner.getPointer()+1,scanner.getCharPos()-1));
+            type = 2; // es string
             return true;
         }
         
         scanner.setCharPos(tempindex);
         if (isChar()){
             builder.setString(scanner.getString(scanner.getPointer()+1,scanner.getCharPos()-1));
+            type = 3; // es char
             return true;
         }
         
@@ -569,15 +629,337 @@ public class Parser {
         
         jumpWhite();
         if (scanner.NextCh() == '.'){
-            String[] array = builder.getString().split(""+""+""+(char)248);
+            String[] array = builder.getString().split(""+(char)248);
+            //System.out.println("Lectura de  whitespace");
+            String lectura = "";
             for (String st: array){
-                whiteSpaces.add(st.charAt(0));
+                lectura += st;
+                
             }
+            whiteSpaces.add(lectura);
+            //System.out.println(whiteSpaces);
             return true;
         }
         
         return false;      
         
+    }
+    
+    public boolean ParserSpecification(){
+        int tempindex;
+        //System.out.println("ingreso a parser");
+        jumpWhite();//saltamos en blanco
+        tempindex = scanner.getCharPos();//guardamos posicion
+        log += "L: "+scanner.getLine()+" C: "+scanner.getColumn() +" "+ "lectura PRODUCTIONS\n";
+        if (readSpecWord(9)){//si dice PRODUCTIONS
+            tempindex = scanner.getCharPos();
+            log += "L: "+scanner.getLine()+" C: "+scanner.getColumn() +" "+ "lectura Production\n";
+            
+            //reinicializo los conjuntos
+            productions = new HashMap();
+            newProduction = 0;
+            firstProduction = 0;
+            
+            while (Production()){
+                tempindex = scanner.getCharPos();
+            }
+        }else{
+            return false;
+        }
+        scanner.setCharPos(tempindex);
+     
+        
+        return true;
+    }
+    
+    public boolean Production(){
+        jumpWhite();
+        
+        scanner.setPointer();
+        log += "L: "+scanner.getLine()+" C: "+scanner.getColumn() +" "+ "Production lectura ident\n";
+        if (!isIdent()) return false;//no hay ident
+        String ident = scanner.getString(scanner.getPointer(), scanner.getCharPos());
+        
+        jumpWhite();
+        int tempindex = scanner.getCharPos();
+        if (!Attributes()){
+            scanner.setCharPos(tempindex);
+        }
+        
+        jumpWhite();
+        tempindex = scanner.getCharPos();
+        if (!SemAction()){
+            scanner.setCharPos(tempindex);
+        }
+        
+        jumpWhite();
+        if (scanner.Peek()!='=') return false;//no hay 
+        //System.out.println("Production, si hay =");
+        scanner.NextCh();
+        
+        jumpWhite();
+        
+        tempProductions = new Productions();
+        
+        //Expression ya debe regresar las producciones
+        if (!Expression()) return false; //no hay expression
+        
+        jumpWhite();
+        if (scanner.Peek() != '.') return false;
+        scanner.NextCh();
+        
+        
+        tempProductions.setHead(firstProduction == 0);//establezco la cabeza
+        firstProduction++;//establezco la cabeza
+        
+        if (!productions.containsKey(ident))
+            productions.put(ident, tempProductions);//se agrega a producciones la cabeza y las producciones
+        else
+            productions.get(ident).addAll(tempProductions);//se agregan las nuevas producciones
+        
+        
+            
+        return true;
+    }
+    
+    public boolean Attributes(){
+        jumpWhite();
+        if (scanner.Peek() != '<') return false;
+        scanner.NextCh();
+        if (scanner.Peek() != '.') return false;
+        scanner.NextCh();
+        
+        while (scanner.Peek() != '.'){
+            if (scanner.Peek() == -1) return false;
+            
+            scanner.NextCh();
+        }
+        if (scanner.Peek() != '.') return false;
+        scanner.NextCh(); 
+        if (scanner.Peek() != '>') return false;
+        scanner.NextCh();
+        
+        
+        return true;
+    }
+    
+    public boolean SemAction(){
+        jumpWhite();
+        if (scanner.Peek() != '(') return false;
+        scanner.NextCh();
+        if (scanner.Peek() != '.') return false;
+        scanner.NextCh();
+        
+        while (scanner.Peek() != '.'){
+            if (scanner.Peek() == -1) return false;
+            scanner.NextCh();
+        }
+        if (scanner.Peek() != '.') return false;
+        scanner.NextCh(); 
+        if (scanner.Peek() != ')') return false;
+        scanner.NextCh();
+        
+        
+        return true;
+    }
+    
+    public boolean Expression(){
+        jumpWhite();
+        
+        tempProduction = new Production();
+        //term debe regresar una produccion
+        if (!Term()) return false;
+        
+        tempProductions.addProduction(tempProduction);//agrego la produccion de Term
+        
+        
+        jumpWhite();
+        int tempindex = scanner.getCharPos();
+        boolean cond = true;
+        
+        while (cond){
+            jumpWhite();
+            if (scanner.Peek() == '|'){
+                scanner.NextCh();
+                jumpWhite();
+                tempProduction = new Production();
+                if (Term()){
+                    tempProductions.addProduction(tempProduction);//agrego la produccion de Term
+                    tempindex = scanner.getCharPos();
+                }else{
+                    cond = false;
+                }
+            }else{
+                cond = false;
+            }
+        }
+        
+        scanner.setCharPos(tempindex);
+        
+        
+        return true;
+    }
+    
+    public boolean Term(){
+        jumpWhite();
+        
+        //factor retorna en temptoken el token de lectura
+        if (!Factor()) return false;
+        
+        tempProduction.addToken(tempToken);//agrego el token de factor
+        
+        jumpWhite();
+        int tempindex = scanner.getCharPos();
+        
+        while (Factor()){
+            tempProduction.addToken(tempToken);//agrego los nuevos tokens
+            jumpWhite();
+            tempindex = scanner.getCharPos();
+        }
+        
+        scanner.setCharPos(tempindex);
+        return true;
+    }
+    
+    public boolean Factor(){
+        jumpWhite();
+        int tempindex = scanner.getCharPos();
+        if (Symbol()){
+            
+            //construccion de token de tipo symbol
+            if (type == 1){
+                tempToken = new Token(scanner.getString(tempindex, scanner.getCharPos()),type);
+            }else{
+                tempToken = new Token(scanner.getString(tempindex+1, scanner.getCharPos()-1),type);
+            }
+            
+            jumpWhite();
+            tempindex = scanner.getCharPos();
+            if (!Attributes()){
+                scanner.setCharPos(tempindex);
+            }
+            
+            return true;
+        }
+        
+        scanner.setCharPos(tempindex);
+        if (scanner.Peek() == '('){
+            scanner.NextCh();
+            jumpWhite();
+            
+            /**
+             * cada vez que ingresa a Expression debe utilizar tempProductions
+             */
+            Productions tempPs = new Productions(tempProductions);
+            Production tempP = new Production(tempProduction);
+            
+            tempProductions = new Productions();//se reinicializa
+            tempProduction = new Production();//se reinicializa
+            
+            if (Expression()){
+                jumpWhite();
+                if (scanner.Peek() == ')'){
+                    scanner.NextCh();
+                    
+                    tempToken = new Token("_init"+newProduction,5);//se agrega _initN como produccion
+                    
+                    productions.put("_init"+(newProduction++), tempProductions);
+                    
+                    tempProductions = tempPs;
+                    tempProduction = tempP;
+                    
+                    
+                    return true;
+                }
+            }
+            
+            tempProductions = tempPs;
+            tempProduction = tempP;  
+        }
+        
+        scanner.setCharPos(tempindex);
+        if (scanner.Peek() == '['){
+            scanner.NextCh();
+            jumpWhite();
+            
+            /**
+             * cada vez que ingresa a Expression debe utilizar tempProductions
+             */
+            Productions tempPs = new Productions (tempProductions);
+            Production tempP = new Production (tempProduction);
+            
+            tempProductions = new Productions();//se reinicializa
+            tempProduction = new Production();//se reinicializa
+            
+            if (Expression()){
+                jumpWhite();
+                if (scanner.Peek() == ']'){
+                    scanner.NextCh();
+                    
+                    tempToken = new Token("_init"+newProduction,5);//se agrega _initN como produccion
+                    
+                    Token tk = new Token("~",6);//se agrega token epsilon
+                    Production pd = new Production(tk);
+                    tempProductions.addProduction(pd);//se agrega una produccion de epsilon
+                    
+                    productions.put("_init"+(newProduction++), tempProductions);
+                    
+                    tempProductions = tempPs;
+                    tempProduction = tempP;
+                    
+                    return true;
+                }
+            }
+            
+            tempProductions = tempPs;
+            tempProduction = tempP;
+        }
+        
+        scanner.setCharPos(tempindex);
+        if (scanner.Peek() == '{'){
+            scanner.NextCh();
+            jumpWhite();
+            
+            /**
+             * cada vez que ingresa a Expression debe utilizar tempProductions
+             */
+            Productions tempPs = tempProductions;
+            Production tempP = tempProduction;
+            
+            tempProductions = new Productions();//se reinicializa
+            tempProduction = new Production();//se reinicializa            
+            
+            if (Expression()){
+                jumpWhite();
+                if (scanner.Peek() == '}'){
+                    scanner.NextCh();
+                    
+                    tempToken = new Token("_init"+newProduction,5);//se agrega _initN como produccion
+                    
+                    tempProductions.addAllEnd(tempToken);//se agrega a todas las producciones kleeneadas El mismo al final
+                    
+                    Token tk = new Token("~",6);//se agrega token epsilon
+                    Production pd = new Production(tk);
+                    tempProductions.addProduction(pd);//se agrega una produccion de epsilon
+                    
+                    productions.put("_init"+(newProduction++), tempProductions);
+                    
+                    tempProductions = tempPs;
+                    tempProduction = tempP;
+                    
+                    
+                    
+                    return true;
+                }
+            }
+            tempProductions = tempPs;
+            tempProduction = tempP;
+        }
+        
+        scanner.setCharPos(tempindex);
+        if (SemAction()) return true;
+        
+        return false;
     }
     
     
@@ -644,7 +1026,7 @@ public class Parser {
     
     //metodo para saltarse todo lo blanco
     public void jumpWhite(){
-        while (whiteSpace.contains((char)scanner.Peek())){
+        while (whiteSpace.contains(""+(char)scanner.Peek())){
             //quiere decir que hace Peek y verifica si esta adentro
             //si esta adentro continua con el ciclo
             scanner.NextCh();
@@ -710,6 +1092,61 @@ public class Parser {
     
     public ArrayList getWhite(){
         return whiteSpaces;
+    }
+    
+    public HashMap getProductions(){
+        return productions;
+    }
+    
+    private void checkWhite(){
+        for (int i = 0; i < whiteSpaces.size(); i++){//para cada whiteSpace
+            String prev = whiteSpaces.get(i);//tomamos el string actual
+            String news = "";
+            for (int j = 0; j < prev.length(); j++){//para cada uno de sus caracteres
+                char ch = prev.charAt(j);
+                if (ch == '\\' && j < prev.length()-1){//si es un caracter de escape y no esta al final
+                    char nch = prev.charAt(j+1);//tomamos el siguiente char
+                    char add;
+                    switch (nch){
+                        case 'n': 
+                            add = '\n';
+                            break;
+                        case 't':
+                            add = '\t';
+                            break;
+                        case 'b':
+                            add = '\b';
+                            break;
+                        case 'r':
+                            add = '\r';
+                            break;
+                        case 'f':
+                            add = '\f';
+                            break;
+                        case '\'':
+                            add = '\'';
+                            break;
+                        case '\"':
+                            add = '\"';
+                            break;
+                        case '\\':
+                            add = '\\';
+                            break;
+                        default:
+                            add = nch;
+                            break;  
+                    }
+                    news += add;
+                    j++;
+                    
+                }else{
+                    news += ch;
+                }
+                whiteSpaces.set(i, news);
+                
+            }
+            
+        }
     }
     
 }

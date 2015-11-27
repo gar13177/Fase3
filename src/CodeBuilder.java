@@ -22,14 +22,15 @@ public class CodeBuilder {
     
     private HashMap<String,String> tokens;
     private HashMap<String,String> keywords;
-    private ArrayList<Character> whiteSpace;
+    private ArrayList<String> whiteSpace;
     
-    public CodeBuilder(HashMap tokens, HashMap keywords, ArrayList whiteSpace){
+    public CodeBuilder(HashMap tokens, HashMap keywords, ArrayList whiteSpace, String table){
         this.tokens = tokens;
         this.keywords = keywords;
         this.whiteSpace = whiteSpace;
         //System.out.println("ejecutando");
         change("MyCompiler");
+        change2("Table",table);
         //System.out.println("ejecutado");
         //copy("main");
     }
@@ -51,8 +52,17 @@ public class CodeBuilder {
             text+="keywords.put(\""+key+"\",\""+keywords.get(key)+"\");\n";
         }
         
-        for (char ch: whiteSpace){
-            text += "whiteSpace.add((char)"+(int)ch+");\n";
+        for (String st: whiteSpace){
+            String val = "";
+            for (int i = 0; i < st.length(); i++){//para cada caracter
+                //como no sabemos si puede incluir un entero, escribimos todo como char
+                val += "(char)"+(int)st.charAt(i);//agregamos el char
+                if (i < st.length()-1)//si aun no hemos llegado al ultimo
+                    val += "+";
+                
+                
+            }
+            text += "whiteSpace.add(\"\"+"+val+");\n";
         }
         
        
@@ -65,7 +75,7 @@ public class CodeBuilder {
         try{
             String theString;
 
-            File file = new File("src\\"+namePath+".txt");
+            File file = new File("src\\"+namePath+".java");
             
             Scanner scanner = new Scanner(file);
             
@@ -78,7 +88,43 @@ public class CodeBuilder {
             
             scanner.close();
             
-            theString = theString.replace("-->ADDINIT", addInit());
+            theString = theString.replace("//-->ADDINIT", addInit());
+            
+            
+            theString = theString.replace("\n",System.lineSeparator());
+            
+            
+        
+            writer = new PrintWriter("compilador\\"+namePath+".java","UTF-8");
+            writer.write(theString);
+        } catch (IOException ex) {
+          // report
+            //System.out.println("no se pudo");
+        } finally {
+           try {writer.close();} catch (Exception ex) {/*ignore*/}
+        }
+ 
+    }
+    
+    public void change2(String namePath,String table){
+        PrintWriter writer = null;
+        try{
+            String theString;
+
+            File file = new File("src\\"+namePath+".java");
+            
+            Scanner scanner = new Scanner(file);
+            
+            theString = scanner.nextLine();
+
+            while (scanner.hasNextLine()) {
+                String temp = scanner.nextLine();
+                theString = theString + "\n" + temp;
+            }
+            
+            scanner.close();
+            
+            theString = theString.replace("//-->ADDINIT", table);
             
             
             theString = theString.replace("\n",System.lineSeparator());

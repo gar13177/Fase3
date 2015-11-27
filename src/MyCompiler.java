@@ -50,23 +50,7 @@ public class MyCompiler {
         
     }
     
-public void addInit(){
-tokens.put("div","/");
-tokens.put("number","˥0ø1ø2ø3ø4ø5ø6ø7ø8ø9ȸ˥˥0ø1ø2ø3ø4ø5ø6ø7ø8ø9ȸȸȹ");
-tokens.put("res","-");
-tokens.put("op","(");
-tokens.put("pc",";");
-tokens.put("assignop",":=");
-tokens.put("mul","*");
-tokens.put("lt","<");
-tokens.put("sum","+");
-tokens.put("id","˥aøbøcødøeøføgøhøiøjøkølømønøoøpøqørøsøtøuøvøwøxøyøzøAøBøCøDøEøFøGøHøIøJøKøLøMøNøOøPøQøRøSøTøUøVøWøXøYøZȸ˥˥aøbøcødøeøføgøhøiøjøkølømønøoøpøqørøsøtøuøvøwøxøyøzøAøBøCøDøEøFøGøHøIøJøKøLøMøNøOøPøQøRøSøTøUøVøWøXøYøZȸȸȹ");
-tokens.put("eq","=");
-tokens.put("cp",")");
-whiteSpace.add(""+(char)32);
-whiteSpace.add(""+(char)9);
-whiteSpace.add(""+(char)10);
-}
+//-->ADDINIT
   
     public void createDFA(){
         Iterator it = tokens.keySet().iterator();

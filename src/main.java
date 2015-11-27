@@ -22,6 +22,7 @@ public class main {
         ScannerC scanner;
         Scanner input = new Scanner(System.in);
         Parser parser;
+        
         try{
             System.out.println("Ingrese nombre de archivo de especificacion lexica");
             String name = input.nextLine();
@@ -30,8 +31,22 @@ public class main {
             boolean result = parser.Cocol();
             System.out.println("Fue aceptado: "+result);
             if (result){//compilado con exito
+                Operations operations = new Operations(parser.getProductions(),parser.getTokens());
                 
-                CodeBuilder code = new CodeBuilder(parser.getTokens(),parser.getKeywords(),parser.getWhite());               
+                if (operations.isValid()){
+                    System.out.println("Parser bien definido");
+                    operations.BuildAutomata();
+                    operations.BuildReduce();
+                    operations.BuildTable();
+                    
+
+                    CodeBuilder code = new CodeBuilder(parser.getTokens(),parser.getKeywords(),parser.getWhite(),operations.getTable().autoString());
+                }else{
+                    System.out.println("Parser mal defindo");
+                }
+                //operations.FirstTry();
+                //operations.FollowAll();
+                               
             }          
             
             

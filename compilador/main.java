@@ -21,13 +21,15 @@ public class main {
         // TODO code application logic here
         ScannerC scanner;
         Scanner input = new Scanner(System.in);
-        Parser parser;
         try{
             System.out.println("Ingrese nombre de archivo a lexear");
             String name = input.nextLine();
             scanner = new ScannerC(name);
-            MyCompiler mc = new MyCompiler(scanner2);
-			mc.read();
+            MyCompiler mc = new MyCompiler(scanner);
+            if (mc.read()){
+                System.out.println("Lectura Correcta");
+                mc.parse();
+            }
             System.out.println(mc.getResult());            
             
         } catch (IOException e){

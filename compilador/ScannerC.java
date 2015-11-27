@@ -49,8 +49,6 @@ public class ScannerC {
         
         length = charArray.size();
         
-        
-        
     }
     
     
@@ -96,7 +94,6 @@ public class ScannerC {
     
     public int Peek(){
         if (charPos >= length) return -1;
-        
         return (int)charArray.get(charPos);
     }
     
