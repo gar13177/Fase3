@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Stack;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -152,8 +153,117 @@ whiteSpace.add(""+(char)10);
             
         }
         readTk.add(new Token("$",0));//agregamos el ultimo token al final
-        System.out.println(readTk);
+        
         return true;
+    }
+    
+    public boolean parse(){
+        Stack<Token> readtk = new Stack();
+        
+        //agregamos una pila de tokens
+        for (int i = readTk.size()-1; i >=0; i--){
+            readtk.add(readTk.get(i));
+        }
+        //System.out.println(readtk.pop());
+ 
+        Stack<Integer> states = new Stack();
+        states.add(0);//agregamos el estado inicial
+        
+        String stack = "{Stack|";
+        for (int i : states){
+            stack += i+" ";
+        }
+        stack += "|";
+        String symbols = "{Symbols||";
+        String input = "{Input|";
+        
+        for (Token i : readtk){
+            input += i.getString()+" ";
+        }
+        input += "|";
+        
+        String action = "{Action|";
+        
+        boolean condition = true;
+        do{
+            Action ac = parseTable.getAction(states.peek(),readtk.peek());//tomamos la accion
+            if (ac != null){
+                
+                if (ac.getAction() == 0){//shift
+                    states.add(ac.getNumber());//agregamos a la pila el estado shift
+                    symbols += readtk.pop().getString();//consumimos un elemento
+                    
+                }else if ( ac.getAction() == 1){//goto
+                    states.add(ac.getNumber());//agregamos el estado a la pila goto
+                }else if (ac.getAction() == 2){//reduce
+                    int i = ac.getNumber();//tomamos cantidad de pops
+                    for (int j = 0;  j < i; j++){
+                        states.pop();             
+                    }
+                    
+                    Token tk = new Token(ac.getHead(),5);//creamos un token tipo produccion
+                    Action nac = parseTable.getAction(states.peek(), tk);//tomamos la nueva produccion
+                    if (nac == null) return false;
+                    if (nac.getAction()!= 1) return false;
+                    symbols += tk.getString();//agrego cabeza de goto
+                    states.add(nac.getNumber());
+                }
+                //for (int i : states){
+                //    stack += i+" ";
+                //}
+                action += ac;
+                //for (Token i : readtk){
+                //    input += i.getString()+" ";
+                //}
+                
+                
+                condition = ac.getAction()==3;
+                if (!condition ){
+                    for (Token i : readtk){
+                        input += i.getString()+" ";
+                    }
+                    for (int i : states){
+                        stack += i+" ";
+                    }
+                    stack += "|";
+                    action += "|";
+                    input +="|";
+                    symbols +="|";
+                }else{
+                    stack = stack.substring(0, stack.length()-1);
+                    stack += "}";
+                    action += "}";
+                    input = input.substring(0, input.length()-1);
+                    input +="}";
+                    symbols = symbols.substring(0, symbols.length()-1);
+                    symbols +="}";
+                }
+                
+            }else{
+                return false;
+            }        
+            
+        }while (!condition);
+        
+        stack += "|"+symbols+"|"+input+"|"+action;
+        
+        new Printer(toStringDraw(stack),"Table");
+        new Draw("Table");
+        return true;
+    }
+    
+    public String toStringDraw(String ntxt){
+        String txt = "digraph parse_table {\n";
+        
+        txt += "node [shape = record];\na [label =\"";
+        txt+=ntxt;
+        
+        txt+="\"];\n";
+        
+        txt += "}";
+        
+        
+        return txt;
     }
 
     public String getResult(){

@@ -26,7 +26,10 @@ public class main {
             String name = input.nextLine();
             scanner = new ScannerC(name);
             MyCompiler mc = new MyCompiler(scanner);
-            mc.read();
+            if (mc.read()){
+                System.out.println("Lectura Correcta");
+                mc.parse();
+            }
             System.out.println(mc.getResult());            
             
         } catch (IOException e){
