@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Stack;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -17,11 +18,15 @@ public class MyCompiler {
     
     private HashMap<String,String> tokens = new HashMap();
     private HashMap<String,String> keywords = new HashMap();
-    private ArrayList<Character> whiteSpace = new ArrayList();
+    private ArrayList<String> whiteSpace = new ArrayList();
     private HashMap<String,DDFA> tokensDFA = new HashMap();
     
     private ScannerC scanner;
     private String result= "";
+    
+    private ArrayList<Token> readTk = new ArrayList();//array de tokens leidos
+    
+    private Table parseTable = new Table();
     
     public MyCompiler(ScannerC scanner){
         
@@ -41,7 +46,11 @@ public class MyCompiler {
         createDFA();
     }
     
--->ADDINIT
+    public void addInit(int i){
+        
+    }
+    
+//-->ADDINIT
   
     public void createDFA(){
         Iterator it = tokens.keySet().iterator();
@@ -70,16 +79,19 @@ public class MyCompiler {
             val = val || keywords.get(key).contains(expr);
         }
         
+        val = val || isWhiteSpace(expr);
+        
         return val;
     }
     
-    public String getSomething(String expr){
+    public Token getSomething(String expr){
         String type = "";
         Iterator it = keywords.keySet().iterator();
         while (it.hasNext()){
             String key = (String)it.next();
             if (keywords.get(key).equals(expr)){
-                return key;
+                //retorno un token de tipo string con el keyword
+                return new Token(expr,2);
             }
         }
         
@@ -87,35 +99,54 @@ public class MyCompiler {
         while (it.hasNext()){
             String key = (String)it.next();
             if (tokensDFA.get(key).recognizes(expr)){
-                return key;
+                //retorno el token correspondiente
+                return new Token(key,4);
             }
         }
-
-        return type;
+        
+        //retorna null por defecto
+        return null;
     }
     
     
-    public void read(){
+    public boolean read(){
         char ch = (char)scanner.Peek();
         String st = ""+ch;
-        
-        while (scanner.Peek()!=-1){
-            //System.out.println(st);
-            if (isSomething(st)){
-                scanner.NextCh();
-                st += ""+(char)scanner.Peek();
-            }else{
-                if (st.length()>1){
-                    st = st.substring(0,st.length()-1);
-                    result += "<"+st+","+getSomething(st)+"> ";
-                    st = ""+(char)scanner.Peek();
-                }else{
-                    //if (!isWhiteSpace(st)) result += "<"+st+", ERROR>";
-                    scanner.NextCh();
-                    st = ""+(char)scanner.Peek();
+        int length = scanner.getLength();//longitud del archivo
+        int actpos = 0;//posicion de inicio de lectura
+        int newpos = 0;//posicion del string leido
+        while (actpos < length){//mientras no se haya leido todo el archivo
+            newpos = actpos;//inicializo ambos indicies en el mismo lugar
+            for (int i = actpos; i <= length; i++){//recorro todo el posible string
+                String eval = scanner.getString(actpos, i);//tomo el string actual
+                if (isSomething(eval)){//si es algo
+                    newpos = i;//refresco el indice del nuevo string
                 }
             }
+            
+            if (newpos != actpos){
+                Token tk = getSomething(scanner.getString(actpos, newpos));//creamos un nuevo token
+                if (tk != null){//si es null quiere decir que es whitespace
+                    readTk.add(tk);//agregamos el token leido
+                }
+                actpos = newpos;
+            }else{
+                System.out.println("No se encontro igual, posicion: "+actpos);
+                return false;
+            }
+            
         }
+        readTk.add(new Token("$",0));//agregamos el ultimo token al final
+        
+        return true;
+    }
+    
+    public boolean parse(){
+        Stack<Token> readtk = new Stack();
+        readtk.addAll(readTk);
+        System.out.println(readtk.pop());
+        
+        return true;
     }
 
     public String getResult(){

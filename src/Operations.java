@@ -22,7 +22,7 @@ public class Operations {
     private AutoLR0 automata;
     
     private ArrayList<Relation> reduce;
-    
+    private Table table;
     
     
     
@@ -449,5 +449,23 @@ public class Operations {
         }
         return Closure(itt);
     }
+    
+    public void BuildTable(){
+        table = new Table(automata,reduce);
+        table.buildTable();
+        
+        new Printer(table.toStringDraw(),"Table");
+        new Draw("Table");
+        
+        //System.out.println(tb.toString());
+        
+    }
+    
+    public Table getTable(){
+        return this.table;
+    }
+    
+    
+    
     
 }

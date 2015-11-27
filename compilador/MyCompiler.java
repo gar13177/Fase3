@@ -17,11 +17,15 @@ public class MyCompiler {
     
     private HashMap<String,String> tokens = new HashMap();
     private HashMap<String,String> keywords = new HashMap();
-    private ArrayList<Character> whiteSpace = new ArrayList();
+    private ArrayList<String> whiteSpace = new ArrayList();
     private HashMap<String,DDFA> tokensDFA = new HashMap();
     
     private ScannerC scanner;
     private String result= "";
+    
+    private ArrayList<Token> readTk = new ArrayList();//array de tokens leidos
+    
+    private Table parseTable = new Table();
     
     public MyCompiler(ScannerC scanner){
         
@@ -41,49 +45,26 @@ public class MyCompiler {
         createDFA();
     }
     
+    public void addInit(int i){
+        
+    }
+    
 public void addInit(){
-tokens.put("stringLit","\"˥˥1ø2ø3ø4ø5ø6ø7ø8ø9ø0ø$ø_øaøbøcødøeøføgøhøiøjøkølømønøoøpøqørøsøtøuøvøwøxøyøzøAøBøCøDøEøFøGøHøIøJøKøLøMøNøOøPøQøRøSøTøUøVøWøXøYøZȸø\\˥bøtønøførø\"ø\'ø\\øu˥uȸȹ˥AøBøCøDøEøFøaøbøcødøeøfø1ø2ø3ø4ø5ø6ø7ø8ø9ø0ȸ˥AøBøCøDøEøFøaøbøcødøeøfø1ø2ø3ø4ø5ø6ø7ø8ø9ø0ȸ˥AøBøCøDøEøFøaøbøcødøeøfø1ø2ø3ø4ø5ø6ø7ø8ø9ø0ȸ˥AøBøCøDøEøFøaøbøcødøeøfø1ø2ø3ø4ø5ø6ø7ø8ø9ø0ȸø˥1ø2ø3ø0ȸ˥˥1ø2ø3ø4ø5ø6ø7ø0ȸȸ¶˥˥1ø2ø3ø4ø5ø6ø7ø0ȸȸ¶ø˥1ø2ø3ø4ø5ø6ø7ø0ȸ˥˥1ø2ø3ø4ø5ø6ø7ø0ȸȸ¶ȸȸȹ\"");
-tokens.put("floatLit",".˥1ø2ø3ø4ø5ø6ø7ø8ø9ø0ȸ˥˥1ø2ø3ø4ø5ø6ø7ø8ø9ø0ȸȸȹ˥˥eøEȸ˥+ø-ȸ¶˥1ø2ø3ø4ø5ø6ø7ø8ø9ø0ȸ˥˥1ø2ø3ø4ø5ø6ø7ø8ø9ø0ȸȸȹȸ¶˥FøføDødȸ¶ø˥1ø2ø3ø4ø5ø6ø7ø8ø9ø0ȸ˥˥1ø2ø3ø4ø5ø6ø7ø8ø9ø0ȸȸȹ˥.˥˥1ø2ø3ø4ø5ø6ø7ø8ø9ø0ȸȸȹ˥˥eøEȸ˥+ø-ȸ¶˥1ø2ø3ø4ø5ø6ø7ø8ø9ø0ȸ˥˥1ø2ø3ø4ø5ø6ø7ø8ø9ø0ȸȸȹȸ¶˥FøføDødȸ¶ø˥eøEȸ˥+ø-ȸ¶˥1ø2ø3ø4ø5ø6ø7ø8ø9ø0ȸ˥˥1ø2ø3ø4ø5ø6ø7ø8ø9ø0ȸȸȹ˥FøføDødȸ¶øFøføDødȸ");
-tokens.put("ident","˥$ø_øaøbøcødøeøføgøhøiøjøkølømønøoøpøqørøsøtøuøvøwøxøyøzøAøBøCøDøEøFøGøHøIøJøKøLøMøNøOøPøQøRøSøTøUøVøWøXøYøZȸ˥˥$ø_øaøbøcødøeøføgøhøiøjøkølømønøoøpøqørøsøtøuøvøwøxøyøzøAøBøCøDøEøFøGøHøIøJøKøLøMøNøOøPøQøRøSøTøUøVøWøXøYøZȸø˥1ø2ø3ø4ø5ø6ø7ø8ø9ø0ȸȸȹ");
-tokens.put("intLit","˥˥0ȸø˥1ø2ø3ø4ø5ø6ø7ø8ø9ȸ˥˥1ø2ø3ø4ø5ø6ø7ø8ø9ø0ȸȸȹø˥0xø0Xȸ˥AøBøCøDøEøFøaøbøcødøeøfø1ø2ø3ø4ø5ø6ø7ø8ø9ø0ȸ˥˥AøBøCøDøEøFøaøbøcødøeøfø1ø2ø3ø4ø5ø6ø7ø8ø9ø0ȸȸȹø0˥1ø2ø3ø4ø5ø6ø7ø0ȸ˥˥1ø2ø3ø4ø5ø6ø7ø0ȸȸȹȸ˥løLȸ¶");
-tokens.put("id","˥1ø2ø3ø4ø5ø6ø7ø8ø9ø0ø$ø_øaøbøcødøeøføgøhøiøjøkølømønøoøpøqørøsøtøuøvøwøxøyøzøAøBøCøDøEøFøGøHøIøJøKøLøMøNøOøPøQøRøSøTøUøVøWøXøYøZȸ");
-tokens.put("charLit","'˥˥1ø2ø3ø4ø5ø6ø7ø8ø9ø0ø$ø_øaøbøcødøeøføgøhøiøjøkølømønøoøpøqørøsøtøuøvøwøxøyøzøAøBøCøDøEøFøGøHøIøJøKøLøMøNøOøPøQøRøSøTøUøVøWøXøYøZȸø\\˥bøtønøførø\"ø\'ø\\øu˥uȸȹ˥AøBøCøDøEøFøaøbøcødøeøfø1ø2ø3ø4ø5ø6ø7ø8ø9ø0ȸ˥AøBøCøDøEøFøaøbøcødøeøfø1ø2ø3ø4ø5ø6ø7ø8ø9ø0ȸ˥AøBøCøDøEøFøaøbøcødøeøfø1ø2ø3ø4ø5ø6ø7ø8ø9ø0ȸ˥AøBøCøDøEøFøaøbøcødøeøfø1ø2ø3ø4ø5ø6ø7ø8ø9ø0ȸø˥1ø2ø3ø0ȸ˥˥1ø2ø3ø4ø5ø6ø7ø0ȸȸ¶˥˥1ø2ø3ø4ø5ø6ø7ø0ȸȸ¶ø˥1ø2ø3ø4ø5ø6ø7ø0ȸ˥˥1ø2ø3ø4ø5ø6ø7ø0ȸȸ¶ȸȸ'");
-keywords.put("minus","-");
-keywords.put("dec","--");
-keywords.put("lpar","(");
-keywords.put("dot",".");
-keywords.put("float","float");
-keywords.put("tilde","~");
-keywords.put("long","long");
-keywords.put("not","!");
-keywords.put("rpar",")");
-keywords.put("class","class");
-keywords.put("inc","++");
-keywords.put("new","new");
-keywords.put("lbrace","{");
-keywords.put("static","static");
-keywords.put("void","void");
-keywords.put("rbrace","}");
-keywords.put("rbrack","]");
-keywords.put("byte","byte");
-keywords.put("double","double");
-keywords.put("false","false");
-keywords.put("this","this");
-keywords.put("lbrack","[");
-keywords.put("int","int");
-keywords.put("plus","+");
-keywords.put("super","super");
-keywords.put("comma",",");
-keywords.put("boolean","boolean");
-keywords.put("null","null");
-keywords.put("char","char");
-keywords.put("final","final");
-keywords.put("true","true");
-keywords.put("colon",":");
-keywords.put("short","short");
-whiteSpace.add((char)32);
-whiteSpace.add((char)9);
-whiteSpace.add((char)10);
+tokens.put("div","/");
+tokens.put("number","˥0ø1ø2ø3ø4ø5ø6ø7ø8ø9ȸ˥˥0ø1ø2ø3ø4ø5ø6ø7ø8ø9ȸȸȹ");
+tokens.put("res","-");
+tokens.put("op","(");
+tokens.put("pc",";");
+tokens.put("assignop",":=");
+tokens.put("mul","*");
+tokens.put("lt","<");
+tokens.put("sum","+");
+tokens.put("id","˥aøbøcødøeøføgøhøiøjøkølømønøoøpøqørøsøtøuøvøwøxøyøzøAøBøCøDøEøFøGøHøIøJøKøLøMøNøOøPøQøRøSøTøUøVøWøXøYøZȸ˥˥aøbøcødøeøføgøhøiøjøkølømønøoøpøqørøsøtøuøvøwøxøyøzøAøBøCøDøEøFøGøHøIøJøKøLøMøNøOøPøQøRøSøTøUøVøWøXøYøZȸȸȹ");
+tokens.put("eq","=");
+tokens.put("cp",")");
+whiteSpace.add(""+(char)32);
+whiteSpace.add(""+(char)9);
+whiteSpace.add(""+(char)10);
 }
   
     public void createDFA(){
@@ -113,16 +94,19 @@ whiteSpace.add((char)10);
             val = val || keywords.get(key).contains(expr);
         }
         
+        val = val || isWhiteSpace(expr);
+        
         return val;
     }
     
-    public String getSomething(String expr){
+    public Token getSomething(String expr){
         String type = "";
         Iterator it = keywords.keySet().iterator();
         while (it.hasNext()){
             String key = (String)it.next();
             if (keywords.get(key).equals(expr)){
-                return key;
+                //retorno un token de tipo string con el keyword
+                return new Token(expr,2);
             }
         }
         
@@ -130,35 +114,46 @@ whiteSpace.add((char)10);
         while (it.hasNext()){
             String key = (String)it.next();
             if (tokensDFA.get(key).recognizes(expr)){
-                return key;
+                //retorno el token correspondiente
+                return new Token(key,4);
             }
         }
-
-        return type;
+        
+        //retorna null por defecto
+        return null;
     }
     
     
-    public void read(){
+    public boolean read(){
         char ch = (char)scanner.Peek();
         String st = ""+ch;
-        
-        while (scanner.Peek()!=-1){
-            //System.out.println(st);
-            if (isSomething(st)){
-                scanner.NextCh();
-                st += ""+(char)scanner.Peek();
-            }else{
-                if (st.length()>1){
-                    st = st.substring(0,st.length()-1);
-                    result += "<"+st+","+getSomething(st)+"> ";
-                    st = ""+(char)scanner.Peek();
-                }else{
-                    //if (!isWhiteSpace(st)) result += "<"+st+", ERROR>";
-                    scanner.NextCh();
-                    st = ""+(char)scanner.Peek();
+        int length = scanner.getLength();//longitud del archivo
+        int actpos = 0;//posicion de inicio de lectura
+        int newpos = 0;//posicion del string leido
+        while (actpos < length){//mientras no se haya leido todo el archivo
+            newpos = actpos;//inicializo ambos indicies en el mismo lugar
+            for (int i = actpos; i <= length; i++){//recorro todo el posible string
+                String eval = scanner.getString(actpos, i);//tomo el string actual
+                if (isSomething(eval)){//si es algo
+                    newpos = i;//refresco el indice del nuevo string
                 }
             }
+            
+            if (newpos != actpos){
+                Token tk = getSomething(scanner.getString(actpos, newpos));//creamos un nuevo token
+                if (tk != null){//si es null quiere decir que es whitespace
+                    readTk.add(tk);//agregamos el token leido
+                }
+                actpos = newpos;
+            }else{
+                System.out.println("No se encontro igual, posicion: "+actpos);
+                return false;
+            }
+            
         }
+        readTk.add(new Token("$",0));//agregamos el ultimo token al final
+        System.out.println(readTk);
+        return true;
     }
 
     public String getResult(){

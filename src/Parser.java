@@ -26,14 +26,14 @@ public class Parser {
     
     private String letter = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     private String digit = "123456890";
-    private ArrayList<Character> whiteSpace;
+    private ArrayList<String> whiteSpace;
     private char[] any = new char[93];//todos los caracteres posibles
     
     private HashMap<String, String> characters = new HashMap();
     private HashMap<String, String> keywords = new HashMap();
     private HashMap<String, String> tokens = new HashMap();
 
-    private ArrayList<Character> whiteSpaces = new ArrayList();
+    private ArrayList<String> whiteSpaces = new ArrayList();
     
     private HashMap<String, Productions> productions = new HashMap();//contiene todos los tokens
     private HashMap<String, Productions> newProductions = new HashMap();
@@ -81,9 +81,9 @@ public class Parser {
         
         //conjunto whitespace
         whiteSpace = new ArrayList();
-        whiteSpace.add((char)32);
-        whiteSpace.add((char)9);
-        whiteSpace.add((char)10);
+        whiteSpace.add(""+(char)32);
+        whiteSpace.add(""+(char)9);
+        whiteSpace.add(""+(char)10);
         
         characters.put("letter", letter);
         characters.put("digit", digit);
@@ -95,12 +95,18 @@ public class Parser {
     public boolean Cocol(){
         jumpWhite();//saltamos en blanco
         log += "L: "+scanner.getLine()+" C: "+scanner.getColumn() +" "+ "lectura COMPILER\n";
-        if (!readSpecWord(0)) return false;
+        if (!readSpecWord(0)){
+            new Printer(log,"log.txt"); 
+            return false;
+        }
         
         jumpWhite();//saltamos en blanco
         scanner.setPointer();//fijamos punto de inicio
         log += "L: "+scanner.getLine()+" C: "+scanner.getColumn() +" "+ "lectura ident\n";
-        if (!isIdent()) return false;
+        if (!isIdent()){
+            new Printer(log,"log.txt"); 
+            return false;
+        }
         String ident = scanner.getString(scanner.getPointer(), scanner.getCharPos());//se obtiene el ident
         
         log += "L: "+scanner.getLine()+" C: "+scanner.getColumn() +" "+ "ident: "+ident+"\n";
@@ -108,28 +114,41 @@ public class Parser {
         log += "L: "+scanner.getLine()+" C: "+scanner.getColumn() +" "+ "lectura ScannerSpecification\n";
         ScannerSpecification();//ejecutamos scannerspecification
         
+        checkWhite();//convertimos los / en caracteres de escape
+        
         log += "L: "+scanner.getLine()+" C: "+scanner.getColumn() +" "+ "lectura ParserSpecification\n";
         if (!ParserSpecification()){//ejecutamos parserSpecification
             log += "L: "+scanner.getLine()+" C: "+scanner.getColumn() +" "+ "error no ParserSpecification\n";
+            new Printer(log,"log.txt"); 
             return false;
         }
         
         jumpWhite();//saltamos en blanco
         log += "L: "+scanner.getLine()+" C: "+scanner.getColumn() +" "+ "lectura END\n";
-        if (!readSpecWord(1)) return false;//si no hay END, fallo
+        if (!readSpecWord(1)){
+            new Printer(log,"log.txt"); 
+            return false;
+        }//si no hay END, fallo
         
         
         
         jumpWhite();//saltamos en blanco
         scanner.setPointer();//fijamos punto de inicio
         log += "L: "+scanner.getLine()+" C: "+scanner.getColumn() +" "+ "revision ident\n";
-        if (!isIdent()) return false;//si no es ident fallo
+        if (!isIdent()){
+            new Printer(log,"log.txt"); 
+            return false;
+        }//si no es ident fallo
         
-        if (!ident.equals(scanner.getString(scanner.getPointer(), scanner.getCharPos()))) return false;//comparamos ident
+        if (!ident.equals(scanner.getString(scanner.getPointer(), scanner.getCharPos()))){
+            new Printer(log,"log.txt"); 
+            return false;
+        }//comparamos ident
         log += "L: "+scanner.getLine()+" C: "+scanner.getColumn() +" "+ "ident concuerda\n";
         
         jumpWhite();//saltamos en blanco
         new Printer(log,"log.txt");        
+        
         
         return scanner.NextCh() == '.';//si no es igual fallo
     }
@@ -212,6 +231,7 @@ public class Parser {
             scanner.setCharPos(scanner.getPointer());
             if (WhiteSpaceDecl()){//si es whitespace
                 //System.out.println("white");
+                whiteSpaces = new ArrayList();
                 return false;
             }
             scanner.setCharPos(tempindex);            
@@ -609,10 +629,15 @@ public class Parser {
         
         jumpWhite();
         if (scanner.NextCh() == '.'){
-            String[] array = builder.getString().split(""+""+""+(char)248);
+            String[] array = builder.getString().split(""+(char)248);
+            //System.out.println("Lectura de  whitespace");
+            String lectura = "";
             for (String st: array){
-                whiteSpaces.add(st.charAt(0));
+                lectura += st;
+                
             }
+            whiteSpaces.add(lectura);
+            //System.out.println(whiteSpaces);
             return true;
         }
         
@@ -1001,7 +1026,7 @@ public class Parser {
     
     //metodo para saltarse todo lo blanco
     public void jumpWhite(){
-        while (whiteSpace.contains((char)scanner.Peek())){
+        while (whiteSpace.contains(""+(char)scanner.Peek())){
             //quiere decir que hace Peek y verifica si esta adentro
             //si esta adentro continua con el ciclo
             scanner.NextCh();
@@ -1071,6 +1096,57 @@ public class Parser {
     
     public HashMap getProductions(){
         return productions;
+    }
+    
+    private void checkWhite(){
+        for (int i = 0; i < whiteSpaces.size(); i++){//para cada whiteSpace
+            String prev = whiteSpaces.get(i);//tomamos el string actual
+            String news = "";
+            for (int j = 0; j < prev.length(); j++){//para cada uno de sus caracteres
+                char ch = prev.charAt(j);
+                if (ch == '\\' && j < prev.length()-1){//si es un caracter de escape y no esta al final
+                    char nch = prev.charAt(j+1);//tomamos el siguiente char
+                    char add;
+                    switch (nch){
+                        case 'n': 
+                            add = '\n';
+                            break;
+                        case 't':
+                            add = '\t';
+                            break;
+                        case 'b':
+                            add = '\b';
+                            break;
+                        case 'r':
+                            add = '\r';
+                            break;
+                        case 'f':
+                            add = '\f';
+                            break;
+                        case '\'':
+                            add = '\'';
+                            break;
+                        case '\"':
+                            add = '\"';
+                            break;
+                        case '\\':
+                            add = '\\';
+                            break;
+                        default:
+                            add = nch;
+                            break;  
+                    }
+                    news += add;
+                    j++;
+                    
+                }else{
+                    news += ch;
+                }
+                whiteSpaces.set(i, news);
+                
+            }
+            
+        }
     }
     
 }
